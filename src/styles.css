@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+    box-sizing: border-box;
+    padding: 0px;
+}
+html, body{
+    height:100%;
+    margin:0;
+    flex-grow: 1;
+}
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.centerHorizontal{
+    justify-content:center ;
+}
+.centerVertical{
+    align-items: center;
+}
+.centerHorizontalVertical {
+    align-items: center;
+    justify-content:center;
+}

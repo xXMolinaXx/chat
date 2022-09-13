@@ -1,20 +1,25 @@
+// eslint-disable-next-line
+import 'antd/dist/antd.css';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import { ChatingView, NotFound } from './views';
+import CreateUser from './views/CreateUser/CreateUser';
+import './styles.css';
+import { UserContextComponent } from './hooks/userContext';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContextComponent>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<CreateUser />} />
+          <Route path="/chats" element={<ChatingView />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </UserContextComponent>
   );
 }
 
