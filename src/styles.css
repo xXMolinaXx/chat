@@ -13,10 +13,12 @@ html, body{
 .container{
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
 }
 .centerHorizontal{
     justify-content:center ;
+}
+.rigthHorizontal{
+    justify-content:flex-end
 }
 .centerVertical{
     align-items: center;
@@ -24,4 +26,21 @@ html, body{
 .centerHorizontalVertical {
     align-items: center;
     justify-content:center;
+}
+.nav {
+    background: linear-gradient(to left, #0073cf 0%, #ffffff 111%);;
+    padding: 20px;
+    list-style-type:none;
+}
+
+.nav li{
+    display: inline-block;
+    font-size: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.text-end li {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
 }
