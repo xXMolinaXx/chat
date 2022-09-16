@@ -18,7 +18,7 @@ const MainLayout = ({ children }) => {
   return (
     <>
       <header>
-        <nav className="nav container">
+        <nav className="nav my-container">
           <div>
             <img
               src={logo}

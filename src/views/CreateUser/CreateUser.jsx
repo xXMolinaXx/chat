@@ -46,13 +46,12 @@ const CreateUser = () => {
     return (
         <MainLayout>
             <div
-                
                 style={{ backgroundImage: `url('${backgroundImageSVG}')`, backgroundSize: 'fill' }}
-                className={`container h-full ${ screenSize.medium < window.innerWidth && 'centerHorizontalVertical'}`}
+                className={`my-container h-full ${ screenSize.medium < window.innerWidth && 'centerHorizontalVertical'}`}
             >
-                <div className={`p-5 { }`}>
+                <div className='p-5'>
                     <h1 className=' text-6xl text-center text-white'>Que Onda!</h1>
-                    <div className='container centerHorizontal pt-5'>
+                    <div className='my-container centerHorizontal pt-5'>
                         <img src={comunicacionPNG} alt='icono de chat' width={150}/>
                     </div>
                     <Input value={userName} onChange={({ target }) => setUserName(target.value)} className='rounded-md my-5 h-14' placeholder="Nombre de usuario" />

@@ -12,7 +12,7 @@ html, body{
     font-family: 'Roboto Mono', monospace;
     background-color: whitesmoke;
 }
-.container{
+.my-container{
     display: flex;
     flex-wrap: wrap;
 }
@@ -35,12 +35,17 @@ html, body{
     list-style-type:none;
     border-bottom: solid 2px ;
 }
-
+.li-inline-block{
+    flex-grow: 1;
+    text-align: end;
+}
 .nav .li-inline-block li{
     display: inline-block;
+    font-size: 19px;
+    margin: 0px 20px;
+}
+.nav .li-inline-block li:hover{
     font-size: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
 }
 .hamburger {
     min-height: 30px;
