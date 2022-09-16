@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CloseIcon, HamburgerIcon } from "../../components/atoms";
 import { screenSize } from "../../const/screensize";
-import logo from "../../extras/img/mensaje.png";
+import logo from "../../extras/img/chat.png";
 const MainLayout = ({ children }) => {
   const [browserWidth, setbrowserWidth] = useState(window.innerWidth);
   const [showOption, setshowOption] = useState(false);
@@ -23,7 +23,7 @@ const MainLayout = ({ children }) => {
             <img
               src={logo}
               alt="imagen de hondruas"
-              className="w-12 "
+              className="w-12 ml-5"
               style={{ display: "inline-block" }}
             />
           </div>
@@ -61,6 +61,7 @@ const MainLayout = ({ children }) => {
         >
           Trabajo iconos creados por prettycons - Flaticon
         </a>
+        <a href="https://www.flaticon.es/iconos-gratis/comunicacion" title="comunicación iconos">Comunicación iconos creados por Vectors Market - Flaticon</a>
       </footer>
     </>
   );

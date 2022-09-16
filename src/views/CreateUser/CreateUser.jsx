@@ -46,7 +46,7 @@ const CreateUser = () => {
     return (
         <MainLayout>
             <div
-                style={{ backgroundImage: `url('${backgroundImageSVG}')`, backgroundSize: 'fill' }}
+                style={{ backgroundImage: `url('${backgroundImageSVG}')`, backgroundSize: 'cover' }}
                 className={`my-container h-full ${ screenSize.medium < window.innerWidth && 'centerHorizontalVertical'}`}
             >
                 <div className='p-5'>
