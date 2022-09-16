@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { Input, Button, Row, Col, notification } from 'antd';
 import backgroundImageSVG from '../../extras/img/background-869586.svg'
+import comunicacionPNG from '../../extras/img/comunicacion.png'
 import global_variables from '../../keys';
 import { my_fetch } from '../../methods/fetch';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../hooks/userContext';
-
-import "./styles.css"
 import MainLayout from '../layouts/MainLayout';
+import { screenSize } from '../../const/screensize';
+
 const CreateUser = () => {
     const { setUserLogged } = useContext(UserContext);
     let navigate = useNavigate();
@@ -45,22 +46,25 @@ const CreateUser = () => {
     return (
         <MainLayout>
             <div
-                id='main-div'
-                style={{ height: '100%', backgroundImage: `url('${backgroundImageSVG}')`, backgroundSize: 'cover' }}
-                className="container centerHorizontalVertical"
+                
+                style={{ backgroundImage: `url('${backgroundImageSVG}')`, backgroundSize: 'fill' }}
+                className={`container h-full ${ screenSize.medium < window.innerWidth && 'centerHorizontalVertical'}`}
             >
-                <div className='p-5 font-sans w-96 h-96   rounded-lg shadow-lg container centerHorizontalVertical box-login-form' >
-                    <h1 className=' text-6xl text-center'>Usuarios</h1>
+                <div className={`p-5 { }`}>
+                    <h1 className=' text-6xl text-center text-white'>Que Onda!</h1>
+                    <div className='container centerHorizontal pt-5'>
+                        <img src={comunicacionPNG} alt='icono de chat' width={150}/>
+                    </div>
                     <Input value={userName} onChange={({ target }) => setUserName(target.value)} className='rounded-md my-5 h-14' placeholder="Nombre de usuario" />
                     <Input value={password} onChange={({ target }) => setpassword(target.value)} className='rounded-md my-5 h-14' placeholder="Contrasena" type="password" />
-                    <Row gutter={48}>
+                    <Row gutter={48} className='centerHorizontal'>
                         <Col className="gutter-row" >
-                            <Button onClick={addUser} >
+                            <Button className='bg-white' onClick={addUser} >
                                 Crear Usuario
                             </Button>
                         </Col>
                         <Col className="gutter-row" >
-                            <Button onClick={logUser} >
+                            <Button className='bg-white' onClick={logUser} >
                                 Ingresar
                             </Button>
                         </Col>
