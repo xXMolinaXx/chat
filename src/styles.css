@@ -10,7 +10,10 @@ html, body{
     height:100%;
     margin:0;
     font-family: 'Roboto Mono', monospace;
-    background-color: whitesmoke;
+    background-color: rgb(227, 226, 226);
+}
+.grid-container{
+    display: grid;
 }
 .my-container{
     display: flex;
@@ -33,7 +36,7 @@ html, body{
     /*background: linear-gradient(to left, #0073cf 0%, #ffffff 100%);*/
     padding: 20px;
     list-style-type:none;
-    border-bottom: solid 2px ;
+    background-color: white;
 }
 .li-inline-block{
     flex-grow: 1;
@@ -96,4 +99,9 @@ html, body{
 }
 .x-inner:after {
     transform: rotate(-45deg)
+}
+@media screen and (min-width:768px) {
+    .grid-container{
+        grid-template-columns: 1fr 4fr;
+    }
 }

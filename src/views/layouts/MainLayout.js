@@ -18,7 +18,7 @@ const MainLayout = ({ children }) => {
   return (
     <>
       <header>
-        <nav className="nav my-container">
+        <nav className="nav my-container drop-shadow-xl">
           <div>
             <img
               src={logo}
@@ -46,7 +46,7 @@ const MainLayout = ({ children }) => {
         )}
       </header>
       <main className="h-full">{children}</main>
-      <footer>
+      <footer className="bg-white text-center">
         <p className="text-center">Derechos reservados. Kenny Molina</p>
         <a
           className="text-center"

@@ -1,0 +1,22 @@
+.container-grid{
+    display: grid;
+    background-color: antiquewhite;
+    border: solid 5px black;
+    grid-auto-columns: 200px;
+    grid-template-rows: 100px 200px 100px;
+    grid-auto-flow: column;
+}
+.item{
+    background-color: aqua;
+    text-align: center;
+    border: solid 3px green;
+}
+.container-grid2{
+    display: grid;
+    background-color: cornflowerblue;
+    grid-template-areas: 
+    "nav nav nav"
+    "sidebar main main"
+    "sidebar main main";
+    height: 300px;
+}

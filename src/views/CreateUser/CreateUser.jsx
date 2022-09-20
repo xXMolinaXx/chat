@@ -3,7 +3,7 @@ import { Input, Button, Row, Col, notification } from 'antd';
 import backgroundImageSVG from '../../extras/img/background-869586.svg'
 import comunicacionPNG from '../../extras/img/comunicacion.png'
 import global_variables from '../../keys';
-import { my_fetch } from '../../methods/fetch';
+import { my_fetch } from '../../utils/fetch';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../hooks/userContext';
 import MainLayout from '../layouts/MainLayout';
@@ -16,13 +16,13 @@ const CreateUser = () => {
     const [password, setpassword] = useState('');
     const addUser = async () => {
         const answer = await my_fetch.my_fetch_post(`${global_variables.url_server}/users/creatUser`, { userName, password })
+        console.log(answer);
         if (answer.sucess) {
             navigate('/chats');
         }
         else notification.open({
             message: 'Error',
-            description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+            description:answer.message,
             onClick: () => {
                 console.log('Notification Clicked!');
             },
@@ -36,9 +36,8 @@ const CreateUser = () => {
         }
         else notification.open({
             message: 'Error',
-            description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-            onClick: () => {
+            description:answer.message,
+         onClick: () => {
                 console.log('Notification Clicked!');
             },
         });
