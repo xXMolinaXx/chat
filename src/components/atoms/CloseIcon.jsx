@@ -1,12 +1,12 @@
 import React from 'react'
 
 const CloseIcon = ({ event }) => (
-    <div class="hamburger ">
+    <div className="hamburger ">
         <a
             href="#"
             onClick={event}
         >
-            <div class="hamburger-inner right-3 top-7"></div>
+            <div className="hamburger-inner right-3 top-7"></div>
         </a>
     </div>
 )

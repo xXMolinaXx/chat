@@ -15,7 +15,7 @@ const CreateUser = () => {
     const [userName, setUserName] = useState('');
     const [password, setpassword] = useState('');
     const addUser = async () => {
-        const answer = await my_fetch.my_fetch_post(`${process.env.REACT_APP_BACKEND}/users/creatUser`, { userName, password })
+        const answer = await my_fetch.my_fetch_post(`${process.env.REACT_APP_API_URL}/users/creatUser`, { userName, password })
         console.log(answer);
         if (answer.sucess) {
             navigate('/chats');
@@ -29,8 +29,7 @@ const CreateUser = () => {
         });
     }
     const logUser = async () => {
-        console.log('hola',process.env.REACT_APP_BACKEND)
-        const answer = await my_fetch.my_fetch_post(`${process.env.REACT_APP_BACKEND}/users/login`, { userName, password })
+        const answer = await my_fetch.my_fetch_post(`${process.env.REACT_APP_API_URL}/users/login`, { userName, password })
         if (answer.sucess) {
             setUserLogged(answer.data);
             navigate('/chats');
