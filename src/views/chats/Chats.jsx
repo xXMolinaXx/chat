@@ -22,7 +22,7 @@ const Chats = () => {
     };
 
     const handleOk = async () => {
-        const asnwer = await my_fetch.my_fetch_post(`${global_variables.url_server}/users/addFriend`, { userName, userLoggedId: userLogged.userLogged._id })
+        const asnwer = await my_fetch.my_fetch_post(`${process.env.REACT_APP_BACKEND}/users/addFriend`, { userName, userLoggedId: userLogged.userLogged._id })
         console.log(asnwer);
         notification.open({
             message: asnwer.success ? 'Agregado' : 'Error',

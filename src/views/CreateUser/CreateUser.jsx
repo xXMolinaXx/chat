@@ -15,7 +15,7 @@ const CreateUser = () => {
     const [userName, setUserName] = useState('');
     const [password, setpassword] = useState('');
     const addUser = async () => {
-        const answer = await my_fetch.my_fetch_post(`${global_variables.url_server}/users/creatUser`, { userName, password })
+        const answer = await my_fetch.my_fetch_post(`${process.env.REACT_APP_BACKEND}/users/creatUser`, { userName, password })
         console.log(answer);
         if (answer.sucess) {
             navigate('/chats');
@@ -29,7 +29,8 @@ const CreateUser = () => {
         });
     }
     const logUser = async () => {
-        const answer = await my_fetch.my_fetch_post(`${global_variables.url_server}/users/login`, { userName, password })
+        console.log('hola',process.env.REACT_APP_BACKEND)
+        const answer = await my_fetch.my_fetch_post(`${process.env.REACT_APP_BACKEND}/users/login`, { userName, password })
         if (answer.sucess) {
             setUserLogged(answer.data);
             navigate('/chats');
@@ -45,11 +46,11 @@ const CreateUser = () => {
     return (
         <MainLayout>
             <div
-                style={{ backgroundImage: `url('${backgroundImageSVG}')`, backgroundSize: 'cover' }}
+               
                 className={`my-container h-full ${ screenSize.medium < window.innerWidth && 'centerHorizontalVertical'}`}
             >
-                <div className='p-5'>
-                    <h1 className=' text-6xl text-center text-white'>Que Onda!</h1>
+                <div className='p-5 bg-white rounded'>
+                    <h1 className=' text-6xl text-center '>Que Onda!</h1>
                     <div className='my-container centerHorizontal pt-5'>
                         <img src={comunicacionPNG} alt='icono de chat' width={150}/>
                     </div>

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 *{
     box-sizing: border-box;
     padding: 0px;
@@ -11,6 +12,11 @@ html, body{
     margin:0;
     font-family: 'Roboto Mono', monospace;
     background-color: rgb(227, 226, 226);
+}
+html,body {
+    background-color: #e5e5f7;
+    background-image: radial-gradient(#444cf7 1px, #e5e5f7 0.7px);
+    background-size: 10px 10px;
 }
 .grid-container{
     display: grid;
