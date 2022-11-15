@@ -14,9 +14,9 @@ html, body{
     background-color: rgb(227, 226, 226);
 }
 html,body {
-    background-color: #e5e5f788;
-    background-size: 19px 19px;
-    background-image: repeating-linear-gradient(45deg, #444cf7 0, #444cf7 1.9000000000000001px, #e5e5f7 0, #e5e5f7 50%);    
+    background-color: #e5e5f7;
+    background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
+    background-size: 10px 10px;
 }
 .grid-container{
     display: grid;
