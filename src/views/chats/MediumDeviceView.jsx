@@ -1,12 +1,20 @@
 import { Button, Card, Input } from "antd";
 import React from "react";
 import ModalBase from "../../components/atoms/ModalBase";
+import userIcon from '../../extras/img/user.png'
 const { Meta } = Card;
 
-const MediumDeviceView = ({ showModal, setshowModal }) => {
+const MediumDeviceView = ({
+  showModal,
+  setshowModal,
+  userNameAdd,
+  setuserNameAdd,
+  addFriend,
+  userFriends,
+}) => {
   return (
     <>
-      <div className="my-container bg-white rounded-l m-3 drop-shadow-xl">
+      <div className="bg-white rounded-l m-3 drop-shadow-xl">
         <div className="p-5">
           <Button
             type="default"
@@ -18,11 +26,13 @@ const MediumDeviceView = ({ showModal, setshowModal }) => {
             agregar amigo
           </Button>
         </div>
-        <div className="centerHorizontalVertical">
-          {false ? (
+        <div >
+          {userFriends.length > 0 ? userFriends.map(friend=>(
             <Card
+              key={friend._id}
               hoverable
-              className="rounded m-3 drop-shadow-xl h-52"
+              className="rounded m-3 drop-shadow-xl h-52 "
+              onClick={()=>{}}
               cover={
                 <img
                   className="rounded-xl"
@@ -36,21 +46,25 @@ const MediumDeviceView = ({ showModal, setshowModal }) => {
                     marginTop: 10,
                   }}
                   alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                  src={friend.profilePoto ? friend.profilePoto :userIcon}
                 />
               }
             >
               <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
+                title={friend.userName}
+                description={friend.description}
               />
             </Card>
-          ) : (
+          ))  
+          : (
             <p className="text-center">No tienes ninguna conversacion</p>
           )}
         </div>
       </div>
-      <div className=" bg-white rounded-l m-3 drop-shadow-xl">1</div>
+      <div className=" bg-white rounded-l m-3 drop-shadow-xl flex flex-col-reverse">
+        <div className="bg-black">1</div>
+        <div className="bg-black">1</div>
+      </div>
       {showModal && (
         <ModalBase
           titulo="agregar amigo"
@@ -59,8 +73,15 @@ const MediumDeviceView = ({ showModal, setshowModal }) => {
           }}
         >
           <div className="p-5 flex flex-col ">
-            <Input className="my-2" placeholder="nombre de amigo" />
-            <Button className="my-2" >Agregar amigos</Button>
+            <Input
+              className="my-2"
+              placeholder="nombre de amigo"
+              value={userNameAdd}
+              onChange={({ target }) => {
+                setuserNameAdd(target.value);
+              }}
+            />
+            <Button className="my-2" onClick={addFriend}>Agregar amigos</Button>
           </div>
         </ModalBase>
       )}

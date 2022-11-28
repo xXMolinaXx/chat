@@ -61,7 +61,15 @@ const MainLayout = ({ children }) => {
         >
           Trabajo iconos creados por prettycons - Flaticon
         </a>
-        <a href="https://www.flaticon.es/iconos-gratis/comunicacion" title="comunicación iconos">Comunicación iconos creados por Vectors Market - Flaticon</a>
+        <a
+          href="https://www.flaticon.es/iconos-gratis/comunicacion"
+          title="comunicación iconos"
+        >
+          Comunicación iconos creados por Vectors Market - Flaticon
+        </a>
+        <a href="https://www.flaticon.com/free-icons/user" title="user icons">
+          User icons created by Freepik - Flaticon
+        </a>
       </footer>
     </>
   );
