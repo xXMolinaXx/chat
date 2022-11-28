@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Input, Button, Row, Col, notification } from "antd";
-import backgroundImageSVG from "../../extras/img/background-869586.svg";
 import comunicacionPNG from "../../extras/img/comunicacion.png";
-import global_variables from "../../keys";
 import { my_fetch } from "../../utils/fetch";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../hooks/userContext";

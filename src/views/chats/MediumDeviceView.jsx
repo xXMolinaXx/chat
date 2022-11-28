@@ -1,5 +1,5 @@
 import { Button, Card, Input } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import ModalBase from "../../components/atoms/ModalBase";
 const { Meta } = Card;
 

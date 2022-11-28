@@ -1,5 +1,3 @@
-// eslint-disable-next-line
-import 'antd/dist/antd.css';
 import {
   BrowserRouter,
   Routes,
