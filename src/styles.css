@@ -1,115 +1,127 @@
-@import 'antd/dist/antd.css';
+@import "antd/dist/antd.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import 'antd/dist/antd.css';
+@import "antd/dist/antd.css";
 
-*{
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
 }
-html, body{
-    height:100%;
-    margin:0;
-    font-family: 'Roboto Mono', monospace;
-    background-color: rgb(227, 226, 226);
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "Roboto Mono", monospace;
+  background-color: rgb(227, 226, 226);
 }
-html,body {
-    background-color: #e5e5f7;
-    background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
-    background-size: 10px 10px;
+html,
+body {
+  background-color: #e5e5f7;
+  background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
+  background-size: 10px 10px;
 }
-.grid-container{
-    display: grid;
+.grid-container {
+  display: grid;
 }
-.my-container{
-    display: flex;
-    flex-wrap: wrap;
+.my-container {
+  display: flex;
+  flex-wrap: wrap;
 }
-.centerHorizontal{
-    justify-content:center ;
+.centerHorizontal {
+  justify-content: center;
 }
-.rigthHorizontal{
-    justify-content:flex-end
+.rigthHorizontal {
+  justify-content: flex-end;
 }
-.centerVertical{
-    align-items: center;
+.centerVertical {
+  align-items: center;
 }
 .centerHorizontalVertical {
-    align-items: center;
-    justify-content:center;
+  align-items: center;
+  justify-content: center;
 }
 .nav {
-    /*background: linear-gradient(to left, #0073cf 0%, #ffffff 100%);*/
-    padding: 20px;
-    list-style-type:none;
-    background-color: white;
+  /*background: linear-gradient(to left, #0073cf 0%, #ffffff 100%);*/
+  padding: 20px;
+  list-style-type: none;
+  background-color: white;
 }
-.li-inline-block{
-    flex-grow: 1;
-    text-align: end;
+.li-inline-block {
+  flex-grow: 1;
+  text-align: end;
 }
-.nav .li-inline-block li{
-    display: inline-block;
-    font-size: 19px;
-    margin: 0px 20px;
+.nav .li-inline-block li {
+  display: inline-block;
+  font-size: 19px;
+  margin: 0px 20px;
 }
-.nav .li-inline-block li:hover{
-    font-size: 20px;
+.nav .li-inline-block li:hover {
+  font-size: 20px;
 }
 .hamburger {
-    min-height: 30px;
-    max-width: 50px;
+  min-height: 30px;
+  max-width: 50px;
 }
-.hamburger-inner, .hamburger-inner:after, .hamburger-inner:before {
-    background-color: black;
-    position: absolute;
-    width: 40px;
-    height: 4px;
-    border-radius: 5px;
-    content: '';
-    transition-timing-function: ease;
-    transition-duration: .2s;
+.hamburger-inner,
+.hamburger-inner:after,
+.hamburger-inner:before {
+  background-color: black;
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  border-radius: 5px;
+  content: "";
+  transition-timing-function: ease;
+  transition-duration: 0.2s;
 }
 .hamburger-inner:before {
-    top: 10px;
-    transition-property: transform,opacity;
+  top: 10px;
+  transition-property: transform, opacity;
 }
 .hamburger-inner:after {
-    top: 20px;
+  top: 20px;
 }
-.ul-app-view{
-    text-align: center;
-    font-size: 25px;
+.ul-app-view {
+  text-align: center;
+  font-size: 25px;
 }
-.x-inner{
-    position: absolute;
-    width: 40px;
-    height: 4px;
-    border-radius: 5px;
-    content: '';
-    transition-timing-function: ease;
-    transition-duration: .2s;
+.x-inner {
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  border-radius: 5px;
+  content: "";
+  transition-timing-function: ease;
+  transition-duration: 0.2s;
 }
- .x-inner:after, .x-inner:before {
-    background-color: black;
-    position: absolute;
-    width: 40px;
-    height: 4px;
-    border-radius: 5px;
-    content: '';
-    transition-timing-function: ease;
-    transition-duration: .2s;
+.x-inner:after,
+.x-inner:before {
+  background-color: black;
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  border-radius: 5px;
+  content: "";
+  transition-timing-function: ease;
+  transition-duration: 0.2s;
 }
 .x-inner:before {
-    transform: rotate(45deg)
+  transform: rotate(45deg);
 }
 .x-inner:after {
-    transform: rotate(-45deg)
+  transform: rotate(-45deg);
 }
-@media screen and (min-width:768px) {
-    .grid-container{
-        grid-template-columns: 1fr 4fr;
-    }
+@media screen and (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr 4fr;
+  }
+}
+.chatBackground {
+    background-color: #e5e5f7;
+    background-image:  linear-gradient(135deg, #444cf7 25%, transparent 25%), linear-gradient(225deg, #444cf7 25%, transparent 25%), linear-gradient(45deg, #444cf7 25%, transparent 25%), linear-gradient(315deg, #444cf7 25%, #e5e5f7 25%);
+    background-position:  10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
+    background-repeat: repeat;
 }

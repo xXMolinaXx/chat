@@ -1,8 +1,9 @@
 import { Button, Card, Input, Tooltip } from "antd";
 import { SendOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useContext } from "react";
 import ModalBase from "../../components/atoms/ModalBase";
 import userIcon from "../../extras/img/user.png";
+import { UserContext } from "../../hooks/userContext";
 const { Meta } = Card;
 
 const MediumDeviceView = ({
@@ -16,11 +17,20 @@ const MediumDeviceView = ({
   message,
   onKeySendMessage,
   myMessage,
+  totalUserConected,
+  setuserTochat,
+  userTochat,
+  activeMessage,
 }) => {
+  const { userLogged } = useContext(UserContext);
   return (
     <>
+      {/* online user  */}
       <div className="bg-white rounded-l m-3 drop-shadow-xl">
         <div className="p-5">
+          <p>usuario online: {totalUserConected}</p>
+          {/* 
+          
           <Button
             type="default"
             size="small"
@@ -30,15 +40,18 @@ const MediumDeviceView = ({
           >
             agregar amigo
           </Button>
+          */}
         </div>
-        <div>
+        <div className="overflow-y-auto h-[26rem]">
           {userFriends.length > 0 ? (
             userFriends.map((friend) => (
               <Card
                 key={friend._id}
                 hoverable
                 className="rounded m-3 drop-shadow-xl h-52 "
-                onClick={() => {}}
+                onClick={() => {
+                  setuserTochat(friend);
+                }}
                 cover={
                   <img
                     className="rounded-xl"
@@ -67,13 +80,16 @@ const MediumDeviceView = ({
           )}
         </div>
       </div>
+      {/* message box */}
       <div className=" bg-white rounded-l m-3 drop-shadow-xl flex flex-col-reverse">
         <div className="m-5 flex">
           <Input
             placeholder="escribe aqui..."
             className="mx-5"
             value={message}
-            onChange={({target}) => {setmessage(target.value)}}
+            onChange={({ target }) => {
+              setmessage(target.value);
+            }}
             onKeyDown={onKeySendMessage}
           />
           <Tooltip title="enviar">
@@ -85,8 +101,35 @@ const MediumDeviceView = ({
             />
           </Tooltip>
         </div>
-        <div className="">1</div>
-        <div>{myMessage}</div>
+        <div className="p-10 container h-full flex flex-col-reverse overflow-y-auto h-[500px]">
+          {activeMessage &&
+            activeMessage.message.map(({ message, userId, sendAtd }) => {
+              if (userId !== userLogged._id) {
+                return (
+                  <div className="my-container my-5">
+                    <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
+                      {message}
+                      <br />
+                      <span className="text-[1px]">{sendAtd}</span>
+                    </p>
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="my-container rigthHorizontal my-5 ">
+                    <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
+                      {message}
+                      <br />
+                      <span className="text-[1px]">{sendAtd}</span>
+                    </p>
+                  </div>
+                );
+              }
+            })}
+        </div>
+        <div className="p-5">
+          <h1>{userTochat?.userName}</h1>
+        </div>
       </div>
       {showModal && (
         <ModalBase
