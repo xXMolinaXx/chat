@@ -109,6 +109,9 @@ useEffect(() => {
   socket.auth = { ...userLogged };
   socket.connect();
 }, [])*/
+  socket.on("transfering messages", (message) => {
+    setactiveMessage(message);
+  });
   useEffect(() => {
     if (userTochat)
       socket.emit("active chat connection", {
@@ -129,11 +132,9 @@ useEffect(() => {
         dataUserConnected.filter((el) => el.socketId !== socket.id)
       );
     });
-    socket.on("transfering messages", (message) => {
-      alert('H1')
-      setactiveMessage(message);
-    });
-    return () => { socket.disconnect()};
+    return () => {
+      socket.disconnect();
+    };
   }, [userLogged]);
 
   return (
