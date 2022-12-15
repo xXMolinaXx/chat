@@ -112,6 +112,16 @@ useEffect(() => {
   socket.on("transfering messages", (message) => {
     setactiveMessage(message);
   });
+  socket.on("connect", () => {
+    console.log(socket.id);
+    console.log("estado del socket =>", socket.connected);
+  });
+  socket.on("peopleConnected", ({ amountConnected, dataUserConnected }) => {
+    settotalUserConected(amountConnected);
+    setuserFriends(
+      dataUserConnected.filter((el) => el.socketId !== socket.id)
+    );
+  });
   useEffect(() => {
     if (userTochat)
       socket.emit("active chat connection", {
@@ -122,16 +132,6 @@ useEffect(() => {
   useEffect(() => {
     socket.auth = { ...userLogged };
     socket.connect();
-    socket.on("connect", () => {
-      console.log(socket.id);
-      console.log("estado del socket =>", socket.connected);
-    });
-    socket.on("peopleConnected", ({ amountConnected, dataUserConnected }) => {
-      settotalUserConected(amountConnected);
-      setuserFriends(
-        dataUserConnected.filter((el) => el.socketId !== socket.id)
-      );
-    });
     return () => {
       socket.disconnect();
     };
