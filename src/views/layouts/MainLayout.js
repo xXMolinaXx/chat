@@ -45,7 +45,7 @@ const MainLayout = ({ children }) => {
           </div>
         )}
       </header>
-      <main className="h-full">{children}</main>
+      <main className="h-full chatBackground">{children}</main>
       <footer className="bg-white text-center">
         <p className="text-center">Derechos reservados. Kenny Molina</p>
         <a
