@@ -19,9 +19,13 @@ const CreateUser = () => {
     userName: "",
     description: "",
     password: "",
+    birthday: null,
   });
   const addUser = async () => {
     setform(isForm[0]);
+  };
+  const onChangeDatePicker = (date, dateString) => {
+    console.log(date, dateString);
   };
   const handleCreateUser = async () => {
     const answer = await my_fetch.my_fetch_post(
@@ -54,7 +58,11 @@ const CreateUser = () => {
   return (
     <div className="h-full chatBackground ">
       <Row className="h-full">
-        <Col md={10} sm={24} className="md:bg-white bg-white/70 h-full flex justify-center p-10">
+        <Col
+          md={10}
+          sm={24}
+          className="md:bg-white bg-white/70 h-full flex justify-center p-10"
+        >
           <Space align="center">
             {form === isForm[1] ? (
               <LogIn
@@ -73,6 +81,7 @@ const CreateUser = () => {
                 handleCreateUser={handleCreateUser}
                 newUser={newUser}
                 setnewUser={setnewUser}
+                onChangeDatePicker={onChangeDatePicker}
               />
             )}
           </Space>
