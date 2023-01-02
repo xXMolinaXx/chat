@@ -34,7 +34,6 @@ const Registry = ({
         }}
       />
       <DatePicker
-        value={newUser.birthday}
         placeholder="fecha de nacimiento"
         className="w-full mb-5"
         onChange={onChangeDatePicker}

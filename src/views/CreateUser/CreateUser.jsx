@@ -25,14 +25,14 @@ const CreateUser = () => {
     setform(isForm[0]);
   };
   const onChangeDatePicker = (date, dateString) => {
-    console.log(date, dateString);
+    setnewUser((user) => ({ ...user, birthday: date._d }));
   };
   const handleCreateUser = async () => {
     const answer = await my_fetch.my_fetch_post(
       `${process.env.REACT_APP_API_URL}/users`,
       newUser
     );
-    if (answer?.success) {
+    if (answer?.statusCode === 201) {
       setUserLogged(answer.data);
       navigate("/chats");
     } else
@@ -46,7 +46,8 @@ const CreateUser = () => {
       `${process.env.REACT_APP_API_URL}/users/login`,
       { userName, password }
     );
-    if (answer?.sucess) {
+    console.log(answer);
+    if (answer?.statusCode === 201) {
       setUserLogged(answer.data);
       navigate("/chats");
     } else console.log(answer);
