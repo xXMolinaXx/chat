@@ -5,7 +5,7 @@ import "./styles.css";
 import { UserContext, UserContextComponent } from "./hooks/userContext";
 import GridExample from "./views/gridExample/GridExample";
 import React,{ useContext } from "react";
-import "antd/dist/antd.css";
+
 function App() {
   const { userLogged } = useContext(UserContext);
   return (

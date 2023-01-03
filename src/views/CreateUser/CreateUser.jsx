@@ -39,7 +39,6 @@ const CreateUser = () => {
       `${process.env.REACT_APP_API_URL}/users/login`,
       { userName, password }
     );
-    console.log(answer);
     
   };
   return (
@@ -48,7 +47,7 @@ const CreateUser = () => {
         <Col
           md={10}
           sm={24}
-          className="md:bg-white bg-white/70 h-full flex justify-center p-10"
+          className="bg-white"
         >
           <Space align="center">
             {form === isForm[1] ? (
