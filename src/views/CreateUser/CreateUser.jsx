@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { my_fetch } from "../../utils/fetch";
 import { UserContext } from "../../hooks/userContext";
-import { Col, notification, Row, Space } from "antd";
+import { Col, Row, Space } from "antd";
 import LogIn from "./LogIn";
 import Registry from "./Registry";
 const isForm = ["registry", "login"];
@@ -32,14 +32,7 @@ const CreateUser = () => {
       `${process.env.REACT_APP_API_URL}/users`,
       newUser
     );
-    if (answer?.statusCode === 201) {
-      setUserLogged(answer.data);
-      navigate("/chats");
-    } else
-      notification.open({
-        message: "Error",
-        description: answer?.message,
-      });
+    
   };
   const logUser = async () => {
     const answer = await my_fetch.my_fetch_post(
@@ -47,14 +40,7 @@ const CreateUser = () => {
       { userName, password }
     );
     console.log(answer);
-    if (answer?.statusCode === 201) {
-      setUserLogged(answer.data);
-      navigate("/chats");
-    } else console.log(answer);
-    notification.open({
-      message: "Error",
-      description: answer?.message,
-    });
+    
   };
   return (
     <div className="h-full chatBackground ">

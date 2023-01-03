@@ -51,7 +51,7 @@ const Chats = () => {
   const [userFriends, setuserFriends] = useState([]);
   const [showUsers] = useState(true);
   const [message, setmessage] = useState("");
-  const [myMessage, setmyMessage] = useState("");
+  const [myMessage] = useState("");
   const [activeMessage, setactiveMessage] = useState("");
   const [totalUserConected, settotalUserConected] = useState(0);
   const [userTochat, setuserTochat] = useState(undefined);

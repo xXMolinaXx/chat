@@ -1,7 +1,6 @@
 import { Button, Card, Input, Tooltip } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import React, { useContext } from "react";
-import ModalBase from "../../components/atoms/ModalBase";
 import userIcon from "../../extras/img/user.png";
 import { UserContext } from "../../hooks/userContext";
 const { Meta } = Card;
@@ -127,32 +126,9 @@ const MediumDeviceView = ({
               }
             })}
         </div>
-        <div className="p-5">
-          <h1>{userTochat?.userName}</h1>
-        </div>
+        
       </div>
-      {showModal && (
-        <ModalBase
-          titulo="agregar amigo"
-          onclose={() => {
-            setshowModal(false);
-          }}
-        >
-          <div className="p-5 flex flex-col ">
-            <Input
-              className="my-2"
-              placeholder="nombre de amigo"
-              value={userNameAdd}
-              onChange={({ target }) => {
-                setuserNameAdd(target.value);
-              }}
-            />
-            <Button className="my-2" onClick={addFriend}>
-              Agregar amigos
-            </Button>
-          </div>
-        </ModalBase>
-      )}
+      
     </>
   );
 };
