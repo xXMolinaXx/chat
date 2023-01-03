@@ -47,7 +47,7 @@ const CreateUser = () => {
         <Col
           md={10}
           sm={24}
-          className="bg-white"
+          className="bg-white flex content-center justify-center p-10"
         >
           <Space align="center">
             {form === isForm[1] ? (
