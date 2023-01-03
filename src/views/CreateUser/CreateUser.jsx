@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Col, Row, Space,message as messageAnt, notification } from "antd";
 
 import { my_fetch } from "../../utils/fetch";
 import { UserContext } from "../../hooks/userContext";
-import { Col, Row, Space } from "antd";
 import LogIn from "./LogIn";
 import Registry from "./Registry";
 const isForm = ["registry", "login"];
 const CreateUser = () => {
   const { setUserLogged } = useContext(UserContext);
   let navigate = useNavigate();
+  
   const [form, setform] = useState(isForm[1]);
   const [userName, setUserName] = useState("");
   const [password, setpassword] = useState("");
@@ -35,11 +36,21 @@ const CreateUser = () => {
     
   };
   const logUser = async () => {
+    let message = '';
+    if(userName === '') message = `${message} \n no ingresastes ningun usuario.`
+    if(password === '') message = `${message} \n no ingresastes ninguna contrasena`
+    if( message !== '') {
+      notification.error({message})
+      return;
+    }
     const answer = await my_fetch.my_fetch_post(
       `${process.env.REACT_APP_API_URL}/users/login`,
       { userName, password }
     );
-    
+    if(!answer.success){
+      notification.error({message:answer.message})
+      return;
+    }
   };
   return (
     <div className="h-full chatBackground ">

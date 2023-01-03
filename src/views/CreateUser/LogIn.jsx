@@ -13,7 +13,7 @@ const LogIn = ({
 }) => {
   return (
     <>
-      <h1 className=" text-6xl text-center ">Que Onda!</h1>
+      <h1 className=" text-6xl text-center ">Ingresar?</h1>
       <div className="my-container centerHorizontal pt-5">
         <img src={comunicacionPNG} alt="icono de chat" width={150} />
       </div>

@@ -7,7 +7,7 @@ const my_fetch_get = async (url) => {
     return answer;
   } catch (error) {
     return {
-        sucess: false,
+        success: false,
         message: error.message,
       };
   }
@@ -27,7 +27,7 @@ const my_fetch_post = async (url, data) => {
     return answer;
   } catch (error) {
     return {
-      sucess: false,
+      success: false,
       message: error.message,
     };
   }
