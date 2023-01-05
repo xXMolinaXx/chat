@@ -4,8 +4,12 @@ import CreateUser from "./views/CreateUser/CreateUser";
 import "./styles.css";
 import { UserContext, UserContextComponent } from "./hooks/userContext";
 import GridExample from "./views/gridExample/GridExample";
-import React,{ useContext } from "react";
-
+import React, { useContext } from "react";
+import UserSetting from "./views/UserSetting/UserSetting";
+function returnComponenete(mainView, secondaryView, user) {
+  if (user) return mainView;
+  else return secondaryView;
+}
 function App() {
   const { userLogged } = useContext(UserContext);
   return (
@@ -17,6 +21,7 @@ function App() {
         {userLogged._id && (
           <>
             <Route path="/chats" element={<ChatingView />} />
+            <Route path="/settings/:id" element={<UserSetting />} />
           </>
         )}
       </Routes>

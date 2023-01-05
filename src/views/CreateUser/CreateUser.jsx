@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Col, Row, Space,message as messageAnt, notification } from "antd";
+import { Col, Row, Space, message as messageAnt, notification } from "antd";
 
 import { my_fetch } from "../../utils/fetch";
 import { UserContext } from "../../hooks/userContext";
@@ -10,10 +10,13 @@ const isForm = ["registry", "login"];
 const CreateUser = () => {
   const { setUserLogged } = useContext(UserContext);
   let navigate = useNavigate();
-  
+
   const [form, setform] = useState(isForm[1]);
   const [userName, setUserName] = useState("");
   const [password, setpassword] = useState("");
+  const [errorMessage, seterrorMessage] = useState("");
+  const [errorMessageRegistry, seterrorMessageRegistry] = useState("");
+  const [loading, setloading] = useState(false);
   const [newUser, setnewUser] = useState({
     name: "",
     lastName: "",
@@ -29,28 +32,55 @@ const CreateUser = () => {
     setnewUser((user) => ({ ...user, birthday: date._d }));
   };
   const handleCreateUser = async () => {
+    setloading(true);
+    seterrorMessageRegistry("");
+    let message = "";
+    if (newUser.name === "") message += "no ingresastes tu nombre. ";
+    if (newUser.lastName === "")
+      message += "no ingresastes ninguna contrasena. ";
+    if (newUser.userName === "")
+      message += "no ingresastes ningun nombre de usuario. ";
+    if (newUser.password === "")
+      message += "no ingresastes ninguna contrasena. ";
+    if (message !== "") {
+      setloading(false);
+      seterrorMessageRegistry(message);
+      return;
+    }
     const answer = await my_fetch.my_fetch_post(
       `${process.env.REACT_APP_API_URL}/users`,
       newUser
     );
-    
+    setloading(false);
+    if (answer.statusCode === 401) {
+      notification.error({ message: answer.message });
+      return;
+    }
+    setUserLogged(answer.data);
+    navigate("/chats");
   };
   const logUser = async () => {
-    let message = '';
-    if(userName === '') message = `${message} \n no ingresastes ningun usuario.`
-    if(password === '') message = `${message} \n no ingresastes ninguna contrasena`
-    if( message !== '') {
-      notification.error({message})
+    setloading(true);
+    seterrorMessage("");
+    let message = "";
+    if (userName === "") message += "no ingresastes ningun usuario. ";
+    if (password === "") message += "no ingresastes ninguna contrasena. ";
+    if (message !== "") {
+      setloading(false);
+      seterrorMessage(message);
       return;
     }
     const answer = await my_fetch.my_fetch_post(
       `${process.env.REACT_APP_API_URL}/users/login`,
       { userName, password }
     );
-    if(!answer.success){
-      notification.error({message:answer.message})
+    setloading(false);
+    if ([401, 500].find((el) => el === answer.statusCode || answer.success === false)) {
+      notification.error({ message: answer.message });
       return;
     }
+    setUserLogged(answer.data);
+    navigate("/chats");
   };
   return (
     <div className="h-full chatBackground ">
@@ -69,6 +99,8 @@ const CreateUser = () => {
                 setUserName={setUserName}
                 setpassword={setpassword}
                 userName={userName}
+                errorMessage={errorMessage}
+                loading={loading}
               />
             ) : (
               <Registry
@@ -79,6 +111,8 @@ const CreateUser = () => {
                 newUser={newUser}
                 setnewUser={setnewUser}
                 onChangeDatePicker={onChangeDatePicker}
+                errorMessage={errorMessageRegistry}
+                loading={loading}
               />
             )}
           </Space>

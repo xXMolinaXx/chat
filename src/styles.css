@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+  --main-bg-color: #8d76f6;
+}
 * {
   box-sizing: border-box;
   padding: 0px;
@@ -19,7 +22,10 @@ body {
 }
 html,
 body {
-  min-height: 100vh;
+  min-height: 100vh ;
+}
+.bg-main-color {
+  background-color: var(--main-bg-color) !important;
 }
 .grid-container {
   display: grid;
