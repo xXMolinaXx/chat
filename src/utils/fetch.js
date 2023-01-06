@@ -7,9 +7,9 @@ const my_fetch_get = async (url) => {
     return answer;
   } catch (error) {
     return {
-        success: false,
-        message: error.message,
-      };
+      success: false,
+      message: error.message,
+    };
   }
 };
 const my_fetch_post = async (url, data) => {
@@ -32,4 +32,44 @@ const my_fetch_post = async (url, data) => {
     };
   }
 };
-export const my_fetch = { my_fetch_get, my_fetch_post };
+const my_fetch_put = async (url, data) => {
+  try {
+    let answer = await fetch(url, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      mode: "cors",
+    });
+    answer = answer.json();
+    return answer;
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
+const my_fetch_delete = async (url) => {
+  try {
+    let answer = await fetch(url, {
+      method: "DELETE",
+      mode: "cors",
+    });
+    answer = answer.json();
+    return answer;
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
+export const my_fetch = {
+  my_fetch_get,
+  my_fetch_post,
+  my_fetch_put,
+  my_fetch_delete,
+};

@@ -1,18 +1,30 @@
 import React, { useContext } from "react";
-import { Layout, Menu } from "antd";
+import { Button, Layout, Menu, notification } from "antd";
 
 import { UserContext } from "../../hooks/userContext";
 import logo from "../../extras/img/chat2.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const { Header, Content, Footer } = Layout;
 
 const MainLayout = ({ children }) => {
-  const { userLogged } = useContext(UserContext);
+  let navigate = useNavigate();
+  const { userLogged, setUserLogged } = useContext(UserContext);
+
+  const logout = () => {
+    setUserLogged({});
+    notification.info({ message: "se cerro sesion exitosamente" });
+    navigate("/");
+  };
   const items1 = [
-    <img src={logo} alt="logo" className="my-3 h-8 w-8" />,
+    <Link to={`/chats`}>
+      <img src={logo} alt="logo" className="my-3 h-8 w-8" />
+    </Link>,
     <Link to={`/settings/${userLogged?._id}`}>{userLogged?.name}</Link>,
-  ].map((key) => ({
-    key,
+    <Button type="text" className="text-white" onClick={logout}>
+      SALIR
+    </Button>,
+  ].map((key, i) => ({
+    key: `nav-bar-element-${i}`,
     label: key,
   }));
   return (

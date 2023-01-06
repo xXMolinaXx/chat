@@ -52,7 +52,8 @@ const CreateUser = () => {
       newUser
     );
     setloading(false);
-    if (answer.statusCode === 401) {
+    console.log(answer)
+    if (answer.statusCode === 401 || answer.statusCode === 400 ) {
       notification.error({ message: answer.message });
       return;
     }
