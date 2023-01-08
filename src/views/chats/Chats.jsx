@@ -9,6 +9,9 @@ import SmallDeviceView from "./SmallDeviceView";
 import MediumDeviceView from "./MediumDeviceView";
 
 const socket = io(process.env.REACT_APP_API_URL, { autoConnect: false });
+socket.on("connect_error", (mensaje) => {
+  console.log("Error en conexion:", mensaje);
+});
 /*
 EVENTO DE CONECT
 socket.on("connect", () => {
@@ -37,13 +40,10 @@ socket.io.on("reconnect", () => {
 socket.on("everyone", (message) => {
   console.log(message);
 });*/
-socket.on("connect_error", (mensaje) => {
-  console.log("Error en conexion:", mensaje);
-});
-// We also register a catch-all listener, which is very useful during development:
-socket.onAny((event, ...args) => {
-  console.log(event, args);
-});
+// // We also register a catch-all listener, which is very useful during development:
+// socket.onAny((event, ...args) => {
+//   console.log(event, args);
+// });
 const Chats = () => {
   const { userLogged } = useContext(UserContext);
   const [showModal, setshowModal] = useState(false);
@@ -68,27 +68,27 @@ const Chats = () => {
       });
     }
   };
-  const addFriend = async () => {
-    const answer = await my_fetch.my_fetch_post(
-      `${process.env.REACT_APP_API_URL}/users/addFriend`,
-      {
-        userName: userNameAdd,
-        userLoggedId: userLogged._id,
-      }
-    );
-    notification.open({
-      description: answer.message,
-    });
-    if (answer.success) {
-      const answer2 = await my_fetch.my_fetch_post(
-        `${process.env.REACT_APP_API_URL}/users/getfriends`,
-        {
-          userId: userLogged._id,
-        }
-      );
-      setuserFriends(answer2.data);
-    }
-  };
+  socket.on("peopleConnected", ({ amountConnected, dataUserConnected }) => {
+    settotalUserConected(amountConnected);
+    setuserFriends(dataUserConnected.filter((el) => el.idSocket !== socket.id));
+  });
+  useEffect(() => {
+    socket.auth = { ...userLogged };
+    socket.connect();
+    return () => {
+      socket.disconnect();
+    };
+  }, [userLogged]);
+  // useEffect(() => {
+  //   // if (userTochat)
+  //   //   socket.emit("active chat connection", {
+  //   //     userTochat,
+  //   //     userLogged: { ...userLogged, socketId: socket.id },
+  //   //   });
+  //   socket.emit("identity", 2023, (value) => {
+  //     console.log("respuesta", value);
+  //   });
+  // }, [userTochat]);
   /* useEffect(() => {
     const userConected = (userConected) => {
       settotalUserConected(userConected-1);
@@ -100,67 +100,32 @@ const Chats = () => {
     return () => {
       //socket.off("user conected", userConected);
     };
-  }, []);
-useEffect(() => {
-  socket.on("connect", () => {
-    console.log(socket.id);
-    console.log("estado del socket =>", socket.connected);
-  });
-  socket.auth = { ...userLogged };
-  socket.connect();
-}, [])*/
-  socket.on("transfering messages", (message) => {
-    setactiveMessage(message);
-  });
-  socket.on("connect", () => {
-    console.log(socket.id);
-    console.log("estado del socket =>", socket.connected);
-  });
-  socket.on("peopleConnected", ({ amountConnected, dataUserConnected }) => {
-    settotalUserConected(amountConnected);
-    setuserFriends(
-      dataUserConnected.filter((el) => el.socketId !== socket.id)
-    );
-  });
-  useEffect(() => {
-    if (userTochat)
-      socket.emit("active chat connection", {
-        userTochat,
-        userLogged: { ...userLogged, socketId: socket.id },
-      });
-  }, [userTochat]);
-  useEffect(() => {
-    socket.auth = { ...userLogged };
-    socket.connect();
-    return () => {
-      socket.disconnect();
-    };
-  }, [userLogged]);
-
+  }, []);*/
+  // socket.on("transfering messages", (message) => {
+  //   setactiveMessage(message);
+  // });
+  // socket.on("connect", () => {
+  //   console.log(socket.id);
+  //   console.log("estado del socket =>", socket.connected);
+  // });
   return (
     <MainLayout>
-      <div className="h-full grid-container ">
-        {screenSize.medium < window.innerWidth && (
-          <MediumDeviceView
-            activeMessage={activeMessage}
-            userTochat={userTochat}
-            setuserTochat={setuserTochat}
-            totalUserConected={totalUserConected}
-            myMessage={myMessage}
-            onKeySendMessage={onKeySendMessage}
-            setmessage={setmessage}
-            message={message}
-            showModal={showModal}
-            setshowModal={setshowModal}
-            userNameAdd={userNameAdd}
-            setuserNameAdd={setuserNameAdd}
-            addFriend={addFriend}
-            userFriends={userFriends}
-          />
-        )}
-        {screenSize.medium > window.innerWidth && (
-          <SmallDeviceView showUser={showUsers} />
-        )}
+      <div className="max-w-full">
+        <MediumDeviceView
+          activeMessage={activeMessage}
+          userTochat={userTochat}
+          setuserTochat={setuserTochat}
+          totalUserConected={totalUserConected}
+          myMessage={myMessage}
+          onKeySendMessage={onKeySendMessage}
+          setmessage={setmessage}
+          message={message}
+          showModal={showModal}
+          setshowModal={setshowModal}
+          userNameAdd={userNameAdd}
+          setuserNameAdd={setuserNameAdd}
+          userFriends={userFriends}
+        />
       </div>
     </MainLayout>
   );

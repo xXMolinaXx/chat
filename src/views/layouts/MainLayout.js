@@ -29,10 +29,8 @@ const MainLayout = ({ children }) => {
   }));
   return (
     <Layout
-      className=" h-full chatBackground "
-      style={{
-        minHeight: "100vh",
-      }}
+      className="chatBackground min-h-screen"
+      
     >
       <Header className="header">
         <Menu
@@ -44,7 +42,7 @@ const MainLayout = ({ children }) => {
         <img src={logo} className="my-3 h-8 w-8" />
       </Header>
       <Layout className="site-layout ">
-        <Content className="chatBackground ">{children}</Content>
+        <Content className="chatBackground p-3">{children}</Content>
         <Footer
           style={{
             textAlign: "center",
