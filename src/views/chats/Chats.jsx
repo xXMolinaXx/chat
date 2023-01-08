@@ -52,7 +52,7 @@ const Chats = () => {
   const [showUsers] = useState(true);
   const [message, setmessage] = useState("");
   const [myMessage] = useState("");
-  const [activeMessage, setactiveMessage] = useState("");
+  const [activeMessage, setactiveMessage] = useState([]);
   const [totalUserConected, settotalUserConected] = useState(0);
   const [userTochat, setuserTochat] = useState(undefined);
   const onKeySendMessage = (event) => {
@@ -69,8 +69,11 @@ const Chats = () => {
     }
   };
   socket.on("peopleConnected", ({ amountConnected, dataUserConnected }) => {
-    settotalUserConected(amountConnected);
+    settotalUserConected(dataUserConnected.length);
     setuserFriends(dataUserConnected.filter((el) => el.idSocket !== socket.id));
+  });
+  socket.on("transfering messages", (message) => {
+    setactiveMessage(message);
   });
   useEffect(() => {
     socket.auth = { ...userLogged };
@@ -101,9 +104,6 @@ const Chats = () => {
       //socket.off("user conected", userConected);
     };
   }, []);*/
-  // socket.on("transfering messages", (message) => {
-  //   setactiveMessage(message);
-  // });
   // socket.on("connect", () => {
   //   console.log(socket.id);
   //   console.log("estado del socket =>", socket.connected);
