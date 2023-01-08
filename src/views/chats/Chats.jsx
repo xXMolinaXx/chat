@@ -52,7 +52,7 @@ const Chats = () => {
   const [showUsers] = useState(true);
   const [message, setmessage] = useState("");
   const [myMessage] = useState("");
-  const [activeMessage, setactiveMessage] = useState([]);
+  const [activeMessage, setactiveMessage] = useState(null);
   const [totalUserConected, settotalUserConected] = useState(0);
   const [userTochat, setuserTochat] = useState(undefined);
   const onKeySendMessage = (event) => {
@@ -74,6 +74,15 @@ const Chats = () => {
   });
   socket.on("transfering messages", (message) => {
     setactiveMessage(message);
+  });
+  socket.io.on("reconnect_attempt", () => {
+    notification.info({ message: "se esta intentando reconectar al servidor" });
+  });
+  socket.io.on("reconnect", () => {
+    notification.info({ message: "Se reconecto al servidor" });
+  });
+  socket.on("disconnect", () => {
+    notification.info({ message: "Te desconectastes del servidor" });
   });
   useEffect(() => {
     socket.auth = { ...userLogged };
