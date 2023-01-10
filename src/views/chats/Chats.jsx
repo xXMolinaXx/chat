@@ -2,10 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { UserContext } from "../../hooks/userContext";
 import { notification } from "antd";
-import { my_fetch } from "../../utils/fetch";
 import MainLayout from "../layouts/MainLayout";
-import { screenSize } from "../../const/screensize";
-import SmallDeviceView from "./SmallDeviceView";
 import MediumDeviceView from "./MediumDeviceView";
 
 const socket = io(process.env.REACT_APP_API_URL, { autoConnect: false });
@@ -49,13 +46,12 @@ const Chats = () => {
   const [showModal, setshowModal] = useState(false);
   const [userNameAdd, setuserNameAdd] = useState("");
   const [userFriends, setuserFriends] = useState([]);
-  const [showUsers] = useState(true);
   const [message, setmessage] = useState("");
   const [myMessage] = useState("");
   const [activeMessage, setactiveMessage] = useState(null);
   const [totalUserConected, settotalUserConected] = useState(0);
   const [userTochat, setuserTochat] = useState(undefined);
-  const [connectedWebSocket, setconnectedWebSocket] = useState(true);
+  const [, setconnectedWebSocket] = useState(true);
   const onKeySendMessage = (event) => {
     if (event.key === "Enter") {
       socket.emit("chating", {

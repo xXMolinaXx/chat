@@ -39,7 +39,7 @@ const MainLayout = ({ children }) => {
           defaultSelectedKeys={["2"]}
           items={items1}
         />
-        <img src={logo} className="my-3 h-8 w-8" />
+        <img src={logo} alt="logo "className="my-3 h-8 w-8" />
       </Header>
       <Layout className="site-layout ">
         <Content className="chatBackground p-3">{children}</Content>

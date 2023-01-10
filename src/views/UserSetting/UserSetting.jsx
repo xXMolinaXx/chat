@@ -1,6 +1,5 @@
 import {
   Alert,
-  Avatar,
   Button,
   Col,
   DatePicker,
@@ -10,8 +9,7 @@ import {
   Space,
   Spin,
 } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
@@ -29,7 +27,7 @@ const UserSetting = () => {
 
   const { setUserLogged } = useContext(UserContext);
   const [loading, setloading] = useState(false);
-  const [seterrorMessageRegistry, setseterrorMessageRegistry] = useState("");
+  const [seterrorMessageRegistry, ] = useState("");
   const [user, setuser] = useState({
     name: "",
     lastName: "",
@@ -71,16 +69,16 @@ const UserSetting = () => {
     navigate("/");
     return;
   };
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     const answer = await my_fetch.my_fetch_get(
       `${process.env.REACT_APP_API_URL}/users/${id}`
     );
     setuser(answer);
-  };
+  },[id]);
   useEffect(() => {
     getUser();
     return () => {};
-  }, []);
+  }, [getUser]);
 
   return (
     <MainLayout>

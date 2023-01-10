@@ -6,10 +6,10 @@ import { UserContext, UserContextComponent } from "./hooks/userContext";
 import GridExample from "./views/gridExample/GridExample";
 import React, { useContext } from "react";
 import UserSetting from "./views/UserSetting/UserSetting";
-function returnComponenete(mainView, secondaryView, user) {
-  if (user) return mainView;
-  else return secondaryView;
-}
+// function returnComponenete(mainView, secondaryView, user) {
+//   if (user) return mainView;
+//   else return secondaryView;
+// }
 function App() {
   const { userLogged } = useContext(UserContext);
   return (

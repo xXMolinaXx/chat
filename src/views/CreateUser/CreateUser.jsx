@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Col, Row, Space, message as messageAnt, notification } from "antd";
+import { Col, Row, Space, notification } from "antd";
 
 import { my_fetch } from "../../utils/fetch";
 import { UserContext } from "../../hooks/userContext";
