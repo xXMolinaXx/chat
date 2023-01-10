@@ -1,6 +1,6 @@
 import { Avatar, Badge, Button, Card, Col, Input, Row, Tooltip } from "antd";
 import { SendOutlined } from "@ant-design/icons";
-import React, { useContext } from "react";
+import React, { useContext, useId } from "react";
 import userIcon from "../../extras/img/user.png";
 import { UserContext } from "../../hooks/userContext";
 const { Meta } = Card;
@@ -16,6 +16,7 @@ const MediumDeviceView = ({
   activeMessage,
 }) => {
   const { userLogged } = useContext(UserContext);
+  const id = useId();
   return (
     <Row gutter={10}>
       {/* online user  */}
@@ -84,29 +85,31 @@ const MediumDeviceView = ({
           </div>
           <div className="p-10 container flex flex-col-reverse overflow-y-auto md:h-[300px] lg:h-[400px] ">
             {activeMessage &&
-              activeMessage.message.reverse().map(({ message, userId, sendAtd }) => {
-                if (userId !== userLogged._id) {
-                  return (
-                    <div className="my-container my-5">
-                      <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
-                        {message}
-                        <br />
-                        <span className="text-[1px]">{sendAtd}</span>
-                      </p>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div className="my-container rigthHorizontal my-5 ">
-                      <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
-                        {message}
-                        <br />
-                        <span className="text-[1px]">{sendAtd}</span>
-                      </p>
-                    </div>
-                  );
-                }
-              })}
+              activeMessage.message
+                .reverse()
+                .map(({ message, userId, sendAtd },i) => {
+                  if (userId !== userLogged._id) {
+                    return (
+                      <div className="my-container my-5" key={`${id}-${i}`}>
+                        <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
+                          {message}
+                          <br />
+                          <span className="text-[1px]">{sendAtd}</span>
+                        </p>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div className="my-container rigthHorizontal my-5 " key={`${id}-${i}`}>
+                        <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
+                          {message}
+                          <br />
+                          <span className="text-[1px]">{sendAtd}</span>
+                        </p>
+                      </div>
+                    );
+                  }
+                })}
           </div>
           <p className="p-4 font-bold">
             {userTochat && `${userTochat?.name} ${userTochat?.lastName}`}
