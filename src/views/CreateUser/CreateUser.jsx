@@ -6,6 +6,7 @@ import { my_fetch } from "../../utils/fetch";
 import { UserContext } from "../../hooks/userContext";
 import LogIn from "./LogIn";
 import Registry from "./Registry";
+import { setValueLocalStorage, userLoggedKeyName } from "../../utils/localStorage";
 const isForm = ["registry", "login"];
 const CreateUser = () => {
   const { setUserLogged } = useContext(UserContext);
@@ -52,8 +53,8 @@ const CreateUser = () => {
       newUser
     );
     setloading(false);
-    console.log(answer)
-    if (answer.statusCode === 401 || answer.statusCode === 400 ) {
+    console.log(answer);
+    if (answer.statusCode === 401 || answer.statusCode === 400) {
       notification.error({ message: answer.message });
       return;
     }
@@ -76,11 +77,16 @@ const CreateUser = () => {
       { userName, password }
     );
     setloading(false);
-    if ([401, 500].find((el) => el === answer.statusCode || answer.success === false)) {
+    if (
+      [401, 500].find(
+        (el) => el === answer.statusCode || answer.success === false
+      )
+    ) {
       notification.error({ message: answer.message });
       return;
     }
     setUserLogged(answer.data);
+    setValueLocalStorage(userLoggedKeyName, answer.data);
     navigate("/chats");
   };
   return (

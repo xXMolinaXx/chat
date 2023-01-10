@@ -4,6 +4,7 @@ import { Button, Layout, Menu, notification } from "antd";
 import { UserContext } from "../../hooks/userContext";
 import logo from "../../extras/img/chat2.png";
 import { Link, useNavigate } from "react-router-dom";
+import { userLoggedKeyName } from "../../utils/localStorage";
 const { Header, Content, Footer } = Layout;
 
 const MainLayout = ({ children }) => {
@@ -12,20 +13,20 @@ const MainLayout = ({ children }) => {
 
   const logout = () => {
     setUserLogged({});
+    localStorage.clear(userLoggedKeyName);
     notification.info({ message: "se cerro sesion exitosamente" });
     navigate("/");
   };
-  const items1 = [
+  const items = [
     <Link to={`/chats`}>
       <img src={logo} alt="logo" className="my-3 h-8 w-8" />
     </Link>,
     <Link to={`/settings/${userLogged?._id}`}>{userLogged?.name}</Link>,
-    <Button type="text" className="text-white" onClick={logout}>
+    <div onClick={logout}>
       SALIR
-    </Button>,
-    1,
-    1997,
-    "prueba de lista",
+    </div>,
+    "opcion 1",
+    "opcion 2",
   ].map((key, i) => ({
     key: `nav-bar-element-${i}`,
     label: key,
@@ -36,10 +37,9 @@ const MainLayout = ({ children }) => {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={items1}
+          defaultSelectedKeys={["1"]}
+          items={items}
         />
-        <img src={logo} alt="logo " className="my-3 h-8 w-8" />
       </Header>
       <Layout className="site-layout ">
         <Content className="chatBackground p-3">{children}</Content>

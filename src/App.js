@@ -6,24 +6,41 @@ import { UserContext, UserContextComponent } from "./hooks/userContext";
 import GridExample from "./views/gridExample/GridExample";
 import React, { useContext } from "react";
 import UserSetting from "./views/UserSetting/UserSetting";
-// function returnComponenete(mainView, secondaryView, user) {
-//   if (user) return mainView;
-//   else return secondaryView;
-// }
+function returnComponenete(mainView, secondaryView, user) {
+  if (user?._id) return mainView;
+  else return secondaryView;
+}
 function App() {
   const { userLogged } = useContext(UserContext);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CreateUser />} />
-        <Route path="/grid" element={<GridExample />} />
         <Route path="*" element={<NotFound />} />
-        {userLogged._id && (
-          <>
-            <Route path="/chats" element={<ChatingView />} />
-            <Route path="/settings/:id" element={<UserSetting />} />
-          </>
-        )}
+        <Route path="/grid" element={<GridExample />} />
+        <Route
+          path="/"
+          element={returnComponenete(
+            <ChatingView />,
+            <CreateUser />,
+            userLogged
+          )}
+        />
+        <Route
+          path="/chats"
+          element={returnComponenete(
+            <ChatingView />,
+            <CreateUser />,
+            userLogged
+          )}
+        />
+        <Route
+          path="/settings/:id"
+          element={returnComponenete(
+            <UserSetting />,
+            <CreateUser />,
+            userLogged
+          )}
+        />
       </Routes>
     </BrowserRouter>
   );
