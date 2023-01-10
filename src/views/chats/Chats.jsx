@@ -12,12 +12,12 @@ const socket = io(process.env.REACT_APP_API_URL, { autoConnect: false });
 socket.on("connect_error", (mensaje) => {
   console.log("Error en conexion:", mensaje);
 });
+
+// EVENTO DE CONECT
+// socket.on("connect", () => {
+  
+// });
 /*
-EVENTO DE CONECT
-socket.on("connect", () => {
-  console.log(socket.id);
-  console.log("estado del socket =>", socket.connected);
-});
 socket.on("login", (value) => {
   console.log("valor de bienvenida =>", value);
 });
@@ -55,11 +55,12 @@ const Chats = () => {
   const [activeMessage, setactiveMessage] = useState(null);
   const [totalUserConected, settotalUserConected] = useState(0);
   const [userTochat, setuserTochat] = useState(undefined);
+  const [connectedWebSocket, setconnectedWebSocket] = useState(true);
   const onKeySendMessage = (event) => {
     if (event.key === "Enter") {
       socket.emit("chating", {
         userTochat,
-        userLogged: { ...userLogged, socketId: socket.id },
+        userLogged: { ...userLogged, idSocket: socket.id },
         message: {
           sendAtd: new Date(),
           message: message,
@@ -79,9 +80,11 @@ const Chats = () => {
     notification.info({ message: "se esta intentando reconectar al servidor" });
   });
   socket.io.on("reconnect", () => {
+    setconnectedWebSocket(true);
     notification.info({ message: "Se reconecto al servidor" });
   });
   socket.on("disconnect", () => {
+    setconnectedWebSocket(false);
     notification.info({ message: "Te desconectastes del servidor" });
   });
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { Button, Card, Col, Input, Row, Tooltip } from "antd";
+import { Avatar, Badge, Button, Card, Col, Input, Row, Tooltip } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import React, { useContext } from "react";
 import userIcon from "../../extras/img/user.png";
@@ -22,45 +22,40 @@ const MediumDeviceView = ({
 }) => {
   const { userLogged } = useContext(UserContext);
   return (
-    <Row gutter={10} justify="center" align="center">
+    <Row gutter={10}>
       {/* online user  */}
       <Col md={8} sm={24} className="gutter-row">
-        <div className="bg-white rounded-lg drop-shadow-xl p-5">
+        <div className="bg-white rounded-lg drop-shadow-xl ">
           <div className="p-5">
             <p>usuario online: {totalUserConected}</p>
           </div>
-          <div className="overflow-y-auto md:h-[500px] lg:h-[700px]">
+          <div className="overflow-y-auto p-5 md:max-h-[500px] lg:max-h-[700px] md:min-h-[300px] lg:min-h-[500px] ">
             {userFriends.length > 0 ? (
               userFriends.map((friend) => (
-                <Card
-                  key={friend._id}
-                  hoverable
-                  className="rounded m-1 p-2 drop-shadow-xl h-[15rem] "
-                  onClick={() => {
-                    setuserTochat(friend);
-                  }}
-                  cover={
-                    <img
-                      className="rounded-xl"
-                      style={{
-                        width: 100,
-                        height: 100,
-                        marginLeft: "AUTO",
-                        marginRight: "AUTO",
-                        borderRadius: 100,
-                        objectFit: "contain",
-                        marginTop: 10,
-                      }}
-                      alt="example"
-                      src={friend.profilePoto ? friend.profilePoto : userIcon}
+                <Badge key={friend._id} count={10} className="w-full">
+                  <Card
+                    hoverable
+                    className="drop-shadow-xl"
+                    onClick={() => {
+                      setuserTochat(friend);
+                    }}
+                  >
+                    <Meta
+                      avatar={
+                        <Avatar
+                          src={
+                            friend.profilePoto ? friend.profilePoto : userIcon
+                          }
+                        />
+                      }
+                      title={friend.userName}
+                      description={`${friend.description.substring(
+                        0,
+                        100
+                      )} ...`}
                     />
-                  }
-                >
-                  <Meta
-                    title={friend.userName}
-                    description={`${friend.description.substring(0, 60)} ...`}
-                  />
-                </Card>
+                  </Card>
+                </Badge>
               ))
             ) : (
               <p className="text-center">No tienes ninguna conversacion</p>
@@ -70,9 +65,10 @@ const MediumDeviceView = ({
       </Col>
       {/* message box */}
       <Col md={15} sm={24} className="gutter-row ">
-        <div className="bg-white rounded-l  drop-shadow-xl flex flex-col-reverse h-full">
+        <div className="bg-white rounded-lg  drop-shadow-xl flex flex-col-reverse md:max-h-[500px] lg:max-h-[700px] md:min-h-[300px] lg:min-h-[500px]">
           <div className="m-5 flex">
             <Input
+              disabled={!userTochat ? true : false}
               placeholder="escribe aqui..."
               className="mx-5"
               value={message}
@@ -83,6 +79,7 @@ const MediumDeviceView = ({
             />
             <Tooltip title="enviar">
               <Button
+                disabled={!userTochat ? true : false}
                 className="mx-5"
                 type="ghost"
                 shape="circle"
@@ -90,9 +87,9 @@ const MediumDeviceView = ({
               />
             </Tooltip>
           </div>
-          <div className="p-10 container h-full flex flex-col-reverse overflow-y-auto h-[500px]">
+          <div className="p-10 container flex flex-col-reverse overflow-y-auto md:h-[300px] lg:h-[400px] ">
             {activeMessage &&
-              activeMessage.message.map(({ message, userId, sendAtd }) => {
+              activeMessage.message.reverse().map(({ message, userId, sendAtd }) => {
                 if (userId !== userLogged._id) {
                   return (
                     <div className="my-container my-5">
@@ -116,6 +113,9 @@ const MediumDeviceView = ({
                 }
               })}
           </div>
+          <p className="p-4 font-bold">
+            {userTochat && `${userTochat?.name} ${userTochat?.lastName}`}
+          </p>
         </div>
       </Col>
     </Row>
