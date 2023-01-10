@@ -23,15 +23,15 @@ const MainLayout = ({ children }) => {
     <Button type="text" className="text-white" onClick={logout}>
       SALIR
     </Button>,
+    1,
+    1997,
+    "prueba de lista",
   ].map((key, i) => ({
     key: `nav-bar-element-${i}`,
     label: key,
   }));
   return (
-    <Layout
-      className="chatBackground min-h-screen"
-      
-    >
+    <Layout className="chatBackground min-h-screen">
       <Header className="header">
         <Menu
           theme="dark"
@@ -39,7 +39,7 @@ const MainLayout = ({ children }) => {
           defaultSelectedKeys={["2"]}
           items={items1}
         />
-        <img src={logo} alt="logo "className="my-3 h-8 w-8" />
+        <img src={logo} alt="logo " className="my-3 h-8 w-8" />
       </Header>
       <Layout className="site-layout ">
         <Content className="chatBackground p-3">{children}</Content>

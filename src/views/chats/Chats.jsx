@@ -4,6 +4,8 @@ import { UserContext } from "../../hooks/userContext";
 import { notification } from "antd";
 import MainLayout from "../layouts/MainLayout";
 import MediumDeviceView from "./MediumDeviceView";
+import { screenSize } from "../../const/screensize";
+import SmallDeviceView from "./SmallDeviceView";
 
 const socket = io(process.env.REACT_APP_API_URL, { autoConnect: false });
 socket.on("connect_error", (mensaje) => {
@@ -12,7 +14,7 @@ socket.on("connect_error", (mensaje) => {
 
 // EVENTO DE CONECT
 // socket.on("connect", () => {
-  
+
 // });
 /*
 socket.on("login", (value) => {
@@ -52,6 +54,12 @@ const Chats = () => {
   const [totalUserConected, settotalUserConected] = useState(0);
   const [userTochat, setuserTochat] = useState(undefined);
   const [, setconnectedWebSocket] = useState(true);
+  const [windowsInnerWidth, setwindowsInnerWidth] = useState(window.innerWidth);
+  function reportWindowSize() {
+    setwindowsInnerWidth(window.innerWidth);
+  }
+
+  window.addEventListener("resize", reportWindowSize);
   const onKeySendMessage = (event) => {
     if (event.key === "Enter") {
       socket.emit("chating", {
@@ -119,21 +127,39 @@ const Chats = () => {
   return (
     <MainLayout>
       <div className="max-w-full">
-        <MediumDeviceView
-          activeMessage={activeMessage}
-          userTochat={userTochat}
-          setuserTochat={setuserTochat}
-          totalUserConected={totalUserConected}
-          myMessage={myMessage}
-          onKeySendMessage={onKeySendMessage}
-          setmessage={setmessage}
-          message={message}
-          showModal={showModal}
-          setshowModal={setshowModal}
-          userNameAdd={userNameAdd}
-          setuserNameAdd={setuserNameAdd}
-          userFriends={userFriends}
-        />
+        {windowsInnerWidth <= screenSize.xs ? (
+          <SmallDeviceView
+            activeMessage={activeMessage}
+            userTochat={userTochat}
+            setuserTochat={setuserTochat}
+            totalUserConected={totalUserConected}
+            myMessage={myMessage}
+            onKeySendMessage={onKeySendMessage}
+            setmessage={setmessage}
+            message={message}
+            showModal={showModal}
+            setshowModal={setshowModal}
+            userNameAdd={userNameAdd}
+            setuserNameAdd={setuserNameAdd}
+            userFriends={userFriends}
+          />
+        ) : (
+          <MediumDeviceView
+            activeMessage={activeMessage}
+            userTochat={userTochat}
+            setuserTochat={setuserTochat}
+            totalUserConected={totalUserConected}
+            myMessage={myMessage}
+            onKeySendMessage={onKeySendMessage}
+            setmessage={setmessage}
+            message={message}
+            showModal={showModal}
+            setshowModal={setshowModal}
+            userNameAdd={userNameAdd}
+            setuserNameAdd={setuserNameAdd}
+            userFriends={userFriends}
+          />
+        )}
       </div>
     </MainLayout>
   );

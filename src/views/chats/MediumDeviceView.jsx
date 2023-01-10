@@ -6,15 +6,10 @@ import { UserContext } from "../../hooks/userContext";
 const { Meta } = Card;
 
 const MediumDeviceView = ({
-  showModal,
-  setshowModal,
-  userNameAdd,
-  setuserNameAdd,
   userFriends,
   setmessage,
   message,
   onKeySendMessage,
-  myMessage,
   totalUserConected,
   setuserTochat,
   userTochat,
