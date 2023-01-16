@@ -6,6 +6,7 @@ import MainLayout from "../layouts/MainLayout";
 import MediumDeviceView from "./MediumDeviceView";
 import { screenSize } from "../../const/screensize";
 import SmallDeviceView from "./SmallDeviceView";
+import { my_fetch } from "../../utils/fetch";
 
 const socket = io(process.env.REACT_APP_API_URL, { autoConnect: false });
 socket.on("connect_error", (mensaje) => {
@@ -44,6 +45,7 @@ socket.on("everyone", (message) => {
 //   console.log(event, args);
 // });
 const Chats = () => {
+  const [loadingMessage, setloadingMessage] = useState(false);
   const { userLogged } = useContext(UserContext);
   const [showModal, setshowModal] = useState(false);
   const [userNameAdd, setuserNameAdd] = useState("");
@@ -55,10 +57,22 @@ const Chats = () => {
   const [userTochat, setuserTochat] = useState(undefined);
   const [, setconnectedWebSocket] = useState(true);
   const [windowsInnerWidth, setwindowsInnerWidth] = useState(window.innerWidth);
+  const readMessage = async (friend) => {
+    setloadingMessage(true)
+    setuserTochat(friend);
+    const answer = await my_fetch.my_fetch_post(
+      `${process.env.REACT_APP_API_URL}/messages`,
+      {
+        userId: userLogged._id,
+        otherUserId: friend._id,
+      }
+    );
+    setactiveMessage(answer[0]);
+    setloadingMessage(false)
+  };
   function reportWindowSize() {
     setwindowsInnerWidth(window.innerWidth);
   }
-
   window.addEventListener("resize", reportWindowSize);
   const onKeySendMessage = (event) => {
     if (event.key === "Enter") {
@@ -126,12 +140,12 @@ const Chats = () => {
   // });
   return (
     <MainLayout>
-      <div className="max-w-full">
+      <div className="max-w-full container-scroll">
         {windowsInnerWidth <= screenSize.xs ? (
           <SmallDeviceView
             activeMessage={activeMessage}
             userTochat={userTochat}
-            setuserTochat={setuserTochat}
+            setuserTochat={readMessage}
             totalUserConected={totalUserConected}
             myMessage={myMessage}
             onKeySendMessage={onKeySendMessage}
@@ -147,7 +161,7 @@ const Chats = () => {
           <MediumDeviceView
             activeMessage={activeMessage}
             userTochat={userTochat}
-            setuserTochat={setuserTochat}
+            setuserTochat={readMessage}
             totalUserConected={totalUserConected}
             myMessage={myMessage}
             onKeySendMessage={onKeySendMessage}
@@ -158,6 +172,7 @@ const Chats = () => {
             userNameAdd={userNameAdd}
             setuserNameAdd={setuserNameAdd}
             userFriends={userFriends}
+            loadingMessage={loadingMessage}
           />
         )}
       </div>

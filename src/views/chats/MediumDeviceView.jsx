@@ -1,6 +1,8 @@
 import { Avatar, Badge, Button, Card, Col, Input, Row, Tooltip } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import React, { useContext, useId } from "react";
+
+import loadingGif from "../../extras/img/progress.gif";
 import userIcon from "../../extras/img/user.png";
 import { UserContext } from "../../hooks/userContext";
 const { Meta } = Card;
@@ -14,18 +16,19 @@ const MediumDeviceView = ({
   setuserTochat,
   userTochat,
   activeMessage,
+  loadingMessage,
 }) => {
   const { userLogged } = useContext(UserContext);
   const id = useId();
   return (
-    <Row gutter={10}>
+    <Row gutter={10} align="middle" justify={"center"}>
       {/* online user  */}
       <Col md={8} sm={24} className="gutter-row">
-        <div className="bg-white rounded-lg drop-shadow-xl ">
+        <div className="bg-white rounded-lg drop-shadow-xl h-[80vh]">
           <div className="p-5">
             <p>usuario online: {totalUserConected}</p>
           </div>
-          <div className="overflow-y-auto p-5 md:max-h-[500px] lg:max-h-[700px] md:min-h-[300px] lg:min-h-[500px] ">
+          <div className="overflow-y-auto p-5  ">
             {userFriends.length > 0 ? (
               userFriends.map((friend) => (
                 <Badge key={friend._id} count={10} className="w-full">
@@ -61,7 +64,7 @@ const MediumDeviceView = ({
       </Col>
       {/* message box */}
       <Col md={15} sm={24} className="gutter-row ">
-        <div className="bg-white rounded-lg  drop-shadow-xl flex flex-col-reverse md:max-h-[500px] lg:max-h-[700px] md:min-h-[300px] lg:min-h-[500px]">
+        <div className="bg-white rounded-lg  drop-shadow-xl flex flex-col-reverse h-[80vh]">
           <div className="m-5 flex">
             <Input
               disabled={!userTochat ? true : false}
@@ -83,11 +86,20 @@ const MediumDeviceView = ({
               />
             </Tooltip>
           </div>
-          <div className="p-10 container flex flex-col-reverse overflow-y-auto md:h-[300px] lg:h-[400px] ">
+          <div
+            className={`p-10 container flex flex-col-reverse overflow-y-auto h-full container-scroll ${
+              loadingMessage && "justify-center items-center"
+            }`}
+          >
+            {loadingMessage && (
+              <div>
+                <img src={loadingGif} alt="cargando" width={100} />
+              </div>
+            )}
             {activeMessage &&
               activeMessage.message
                 .reverse()
-                .map(({ message, userId, sendAtd },i) => {
+                .map(({ message, userId, sendAtd }, i) => {
                   if (userId !== userLogged._id) {
                     return (
                       <div className="my-container my-5" key={`${id}-${i}`}>
@@ -100,7 +112,10 @@ const MediumDeviceView = ({
                     );
                   } else {
                     return (
-                      <div className="my-container rigthHorizontal my-5 " key={`${id}-${i}`}>
+                      <div
+                        className="my-container rigthHorizontal my-5 "
+                        key={`${id}-${i}`}
+                      >
                         <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
                           {message}
                           <br />
