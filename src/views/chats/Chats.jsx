@@ -13,37 +13,6 @@ socket.on("connect_error", (mensaje) => {
   console.log("Error en conexion:", mensaje);
 });
 
-// EVENTO DE CONECT
-// socket.on("connect", () => {
-
-// });
-/*
-socket.on("login", (value) => {
-  console.log("valor de bienvenida =>", value);
-});
-EVENTO ERRO DE CONEXION
-socket.on("connect_error", () => {
-  console.log("no me pude conectar");
-});
-EVENTO DE DESCONEXION
-socket.on("disconnect", () => {
-  console.log("socket desconectado");
-});
-EVENTO DE INTENTO DE CONEXION
-socket.io.on("reconnect_attempt", () => {
-  console.log("intento de reconexion");
-});
-CUANDO SE CONECTA
-socket.io.on("reconnect", () => {
-  console.log("intento de reconecion exitoso");
-});
-socket.on("everyone", (message) => {
-  console.log(message);
-});*/
-// // We also register a catch-all listener, which is very useful during development:
-// socket.onAny((event, ...args) => {
-//   console.log(event, args);
-// });
 const Chats = () => {
   const [loadingMessage, setloadingMessage] = useState(false);
   const { userLogged } = useContext(UserContext);
@@ -55,26 +24,30 @@ const Chats = () => {
   const [activeMessage, setactiveMessage] = useState(null);
   const [totalUserConected, settotalUserConected] = useState(0);
   const [userTochat, setuserTochat] = useState(undefined);
-  const [, setconnectedWebSocket] = useState(true);
   const [windowsInnerWidth, setwindowsInnerWidth] = useState(window.innerWidth);
   const readMessage = async (friend) => {
-    setloadingMessage(true)
-    setuserTochat(friend);
-    const answer = await my_fetch.my_fetch_post(
-      `${process.env.REACT_APP_API_URL}/messages`,
-      {
-        userId: userLogged._id,
-        otherUserId: friend._id,
-      }
-    );
-    setactiveMessage(answer[0]);
-    setloadingMessage(false)
+    try {
+      setloadingMessage(true);
+      setuserTochat(friend);
+      const answer = await my_fetch.my_fetch_post(
+        `${process.env.REACT_APP_API_URL}/messages`,
+        {
+          userId: userLogged._id,
+          otherUserId: friend._id,
+        }
+      );
+      setactiveMessage(answer);
+    } catch (error) {
+      //console.log(error);
+    }
+    setloadingMessage(false);
   };
   function reportWindowSize() {
     setwindowsInnerWidth(window.innerWidth);
   }
   window.addEventListener("resize", reportWindowSize);
   const onKeySendMessage = (event) => {
+    if (message === "") return;
     if (event.key === "Enter") {
       socket.emit("chating", {
         userTochat,
@@ -85,7 +58,21 @@ const Chats = () => {
           userId: userLogged._id,
         },
       });
+      setmessage("");
     }
+  };
+  const sendMessage = () => {
+    if (message === "") return;
+    socket.emit("chating", {
+      userTochat,
+      userLogged: { ...userLogged, idSocket: socket.id },
+      message: {
+        sendAtd: new Date(),
+        message: message,
+        userId: userLogged._id,
+      },
+    });
+    setmessage("");
   };
   socket.on("peopleConnected", ({ amountConnected, dataUserConnected }) => {
     settotalUserConected(dataUserConnected.length);
@@ -98,11 +85,9 @@ const Chats = () => {
     notification.info({ message: "se esta intentando reconectar al servidor" });
   });
   socket.io.on("reconnect", () => {
-    setconnectedWebSocket(true);
     notification.info({ message: "Se reconecto al servidor" });
   });
   socket.on("disconnect", () => {
-    setconnectedWebSocket(false);
     notification.info({ message: "Te desconectastes del servidor" });
   });
   useEffect(() => {
@@ -112,32 +97,6 @@ const Chats = () => {
       socket.disconnect();
     };
   }, [userLogged]);
-  // useEffect(() => {
-  //   // if (userTochat)
-  //   //   socket.emit("active chat connection", {
-  //   //     userTochat,
-  //   //     userLogged: { ...userLogged, socketId: socket.id },
-  //   //   });
-  //   socket.emit("identity", 2023, (value) => {
-  //     console.log("respuesta", value);
-  //   });
-  // }, [userTochat]);
-  /* useEffect(() => {
-    const userConected = (userConected) => {
-      settotalUserConected(userConected-1);
-    };
-    socket.on("user conected", userConected);
-    socket.on("receiveMessage", (mensaje) => {
-      setmyMessage(mensaje);
-    });
-    return () => {
-      //socket.off("user conected", userConected);
-    };
-  }, []);*/
-  // socket.on("connect", () => {
-  //   console.log(socket.id);
-  //   console.log("estado del socket =>", socket.connected);
-  // });
   return (
     <MainLayout>
       <div className="max-w-full container-scroll">
@@ -173,6 +132,7 @@ const Chats = () => {
             setuserNameAdd={setuserNameAdd}
             userFriends={userFriends}
             loadingMessage={loadingMessage}
+            sendMessage={sendMessage}
           />
         )}
       </div>
@@ -181,3 +141,60 @@ const Chats = () => {
 };
 
 export default Chats;
+// EVENTO DE CONECT
+// socket.on("connect", () => {
+
+// });
+/*
+socket.on("login", (value) => {
+  console.log("valor de bienvenida =>", value);
+});
+EVENTO ERRO DE CONEXION
+socket.on("connect_error", () => {
+  console.log("no me pude conectar");
+});
+EVENTO DE DESCONEXION
+socket.on("disconnect", () => {
+  console.log("socket desconectado");
+});
+EVENTO DE INTENTO DE CONEXION
+socket.io.on("reconnect_attempt", () => {
+  console.log("intento de reconexion");
+});
+CUANDO SE CONECTA
+socket.io.on("reconnect", () => {
+  console.log("intento de reconecion exitoso");
+});
+socket.on("everyone", (message) => {
+  console.log(message);
+});*/
+// // We also register a catch-all listener, which is very useful during development:
+// socket.onAny((event, ...args) => {
+//   console.log(event, args);
+// });
+// useEffect(() => {
+//   // if (userTochat)
+//   //   socket.emit("active chat connection", {
+//   //     userTochat,
+//   //     userLogged: { ...userLogged, socketId: socket.id },
+//   //   });
+//   socket.emit("identity", 2023, (value) => {
+//     console.log("respuesta", value);
+//   });
+// }, [userTochat]);
+/* useEffect(() => {
+    const userConected = (userConected) => {
+      settotalUserConected(userConected-1);
+    };
+    socket.on("user conected", userConected);
+    socket.on("receiveMessage", (mensaje) => {
+      setmyMessage(mensaje);
+    });
+    return () => {
+      //socket.off("user conected", userConected);
+    };
+  }, []);*/
+// socket.on("connect", () => {
+//   console.log(socket.id);
+//   console.log("estado del socket =>", socket.connected);
+// });

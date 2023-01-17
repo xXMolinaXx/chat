@@ -17,9 +17,9 @@ const MediumDeviceView = ({
   userTochat,
   activeMessage,
   loadingMessage,
+  sendMessage,
 }) => {
   const { userLogged } = useContext(UserContext);
-  const id = useId();
   return (
     <Row gutter={10} align="middle" justify={"center"}>
       {/* online user  */}
@@ -31,7 +31,7 @@ const MediumDeviceView = ({
           <div className="overflow-y-auto p-5  ">
             {userFriends.length > 0 ? (
               userFriends.map((friend) => (
-                <Badge key={friend._id} count={10} className="w-full">
+                <Badge key={friend._id} count={1} className="w-full">
                   <Card
                     hoverable
                     className="drop-shadow-xl"
@@ -78,6 +78,7 @@ const MediumDeviceView = ({
             />
             <Tooltip title="enviar">
               <Button
+                onClick={sendMessage}
                 disabled={!userTochat ? true : false}
                 className="mx-5"
                 type="ghost"
@@ -97,12 +98,14 @@ const MediumDeviceView = ({
               </div>
             )}
             {activeMessage &&
-              activeMessage.message
-                .reverse()
-                .map(({ message, userId, sendAtd }, i) => {
+              activeMessage.message.map(
+                ({ message, userId, sendAtd, _id }, i) => {
                   if (userId !== userLogged._id) {
                     return (
-                      <div className="my-container my-5" key={`${id}-${i}`}>
+                      <div
+                        className="my-container my-5 max"
+                        key={`${_id}-${i}`}
+                      >
                         <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
                           {message}
                           <br />
@@ -110,11 +113,11 @@ const MediumDeviceView = ({
                         </p>
                       </div>
                     );
-                  } else {
+                  } else if (userId === userLogged._id) {
                     return (
                       <div
                         className="my-container rigthHorizontal my-5 "
-                        key={`${id}-${i}`}
+                        key={`${_id}-${i}`}
                       >
                         <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
                           {message}
@@ -124,7 +127,8 @@ const MediumDeviceView = ({
                       </div>
                     );
                   }
-                })}
+                }
+              )}
           </div>
           <p className="p-4 font-bold">
             {userTochat && `${userTochat?.name} ${userTochat?.lastName}`}
