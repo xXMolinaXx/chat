@@ -1,12 +1,23 @@
-import { Avatar, Badge, Button, Card, Col, Input, Row, Tooltip } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Col,
+  Input,
+  Row,
+  Tooltip,
+  Typography,
+} from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import React, { useContext, useId } from "react";
 
+import AddFriend from "./AddFriend";
 import loadingGif from "../../extras/img/progress.gif";
 import userIcon from "../../extras/img/user.png";
 import { UserContext } from "../../hooks/userContext";
 const { Meta } = Card;
-
+const { Paragraph } = Typography;
 const MediumDeviceView = ({
   userFriends,
   setmessage,
@@ -18,52 +29,66 @@ const MediumDeviceView = ({
   activeMessage,
   loadingMessage,
   sendMessage,
+  addFriend,
+  handleOnchange,
+  friendToAdd,
 }) => {
   const { userLogged } = useContext(UserContext);
   return (
     <Row gutter={10} align="middle" justify={"center"}>
       {/* online user  */}
-      <Col md={8} sm={24} className="gutter-row">
+      <Col md={5} sm={24} className="gutter-row">
         <div className="bg-white rounded-lg drop-shadow-xl h-[80vh]">
           <div className="p-5">
             <p>usuario online: {totalUserConected}</p>
+            <Button>agregar amigo</Button>
           </div>
-          <div className="overflow-y-auto p-5  ">
-            {userFriends.length > 0 ? (
-              userFriends.map((friend) => (
-                <Badge key={friend._id} count={1} className="w-full">
-                  <Card
-                    hoverable
-                    className="drop-shadow-xl"
-                    onClick={() => {
-                      setuserTochat(friend);
-                    }}
-                  >
-                    <Meta
-                      avatar={
-                        <Avatar
-                          src={
-                            friend.profilePoto ? friend.profilePoto : userIcon
-                          }
-                        />
-                      }
-                      title={friend.userName}
-                      description={`${friend.description.substring(
-                        0,
-                        100
-                      )} ...`}
-                    />
-                  </Card>
-                </Badge>
-              ))
-            ) : (
-              <p className="text-center">No tienes ninguna conversacion</p>
-            )}
-          </div>
+          {false ? (
+            <AddFriend
+              onFinish={addFriend}
+              onFinishFailed={() => {}}
+              handleOnchange={handleOnchange}
+              friendToAdd={friendToAdd}
+            />
+          ) : (
+            <div className="overflow-y-auto p-5  ">
+              {userFriends.length > 0 ? (
+                userFriends.map((friend) => (
+                  <Badge key={friend._id} count={1} className="w-full">
+                    <Card
+                      hoverable
+                      className="drop-shadow-xl"
+                      onClick={() => {
+                        setuserTochat(friend);
+                      }}
+                    >
+                      <Meta
+                        avatar={
+                          <Avatar
+                            src={
+                              friend.profilePoto ? friend.profilePoto : userIcon
+                            }
+                          />
+                        }
+                        title={friend.userName}
+                        description={
+                          <Paragraph ellipsis={{ rows: 2 }}>
+                            {friend.description}
+                          </Paragraph>
+                        }
+                      />
+                    </Card>
+                  </Badge>
+                ))
+              ) : (
+                <p className="text-center">No tienes ninguna conversacion</p>
+              )}
+            </div>
+          )}
         </div>
       </Col>
       {/* message box */}
-      <Col md={15} sm={24} className="gutter-row ">
+      <Col md={12} sm={24} className="gutter-row ">
         <div className="bg-white rounded-lg  drop-shadow-xl flex flex-col-reverse h-[80vh]">
           <div className="m-5 flex">
             <Input

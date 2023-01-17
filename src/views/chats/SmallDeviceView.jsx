@@ -84,10 +84,9 @@ const SmallDeviceView = ({
                 />
               </Tooltip>
             </div>
-            <div className="p-10 container flex flex-col-reverse overflow-y-auto h-full">
+            <div className="p-10 container flex flex-col-reverse overflow-y-auto h-full container-scroll">
               {activeMessage &&
                 activeMessage.message
-                  .reverse()
                   .map(({ message, userId, sendAtd }) => {
                     if (userId !== userLogged._id) {
                       return (

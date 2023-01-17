@@ -8,6 +8,7 @@ import {
   Row,
   Space,
   Spin,
+  Typography,
 } from "antd";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
@@ -20,14 +21,14 @@ import logo from "../../extras/img/chat.png";
 import { UserContext } from "../../hooks/userContext";
 dayjs.extend(customParseFormat);
 const dateFormat = "YYYY/MM/DD";
-
+const { Title } = Typography;
 const UserSetting = () => {
   let { id } = useParams();
   let navigate = useNavigate();
 
   const { setUserLogged } = useContext(UserContext);
   const [loading, setloading] = useState(false);
-  const [seterrorMessageRegistry, ] = useState("");
+  const [seterrorMessageRegistry] = useState("");
   const [user, setuser] = useState({
     name: "",
     lastName: "",
@@ -74,7 +75,7 @@ const UserSetting = () => {
       `${process.env.REACT_APP_API_URL}/users/${id}`
     );
     setuser(answer);
-  },[id]);
+  }, [id]);
   useEffect(() => {
     getUser();
     return () => {};
@@ -82,7 +83,7 @@ const UserSetting = () => {
 
   return (
     <MainLayout>
-      <div className="m-10 p-10 bg-white  drop-shadow-2xl">
+      <div className=" p-10 bg-white  drop-shadow-2xl">
         <Row gutter={16}>
           <Col
             className="gutter-row flex flex-col justify-center"
@@ -92,6 +93,10 @@ const UserSetting = () => {
             <div className="my-container centerHorizontal pt-5">
               <img src={logo} alt="icono de chat" width={150} />
             </div>
+            <Title level={2}>codigo de usuario:  {user._id}</Title>
+            <p>
+              nota: comparte este codigo para que tus amigos te puedan agregar
+            </p>
             {/* <div className="mr-auto ml-auto">
               <Avatar size={100} icon={<UserOutlined />} />
             </div>
@@ -108,9 +113,8 @@ const UserSetting = () => {
           </Col>
           <Col className="gutter-row" xs={24} md={12}>
             <>
-              <h4 className=" text-6xl text-center ">
-                Actualiza tu informacion!
-              </h4>
+            <Title >Actualiza tu informacion!</Title>
+              
               <Input
                 className="rounded-md my-5 h-14"
                 placeholder="Escribe tu nombre"

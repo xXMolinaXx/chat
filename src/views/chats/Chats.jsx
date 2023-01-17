@@ -25,6 +25,10 @@ const Chats = () => {
   const [totalUserConected, settotalUserConected] = useState(0);
   const [userTochat, setuserTochat] = useState(undefined);
   const [windowsInnerWidth, setwindowsInnerWidth] = useState(window.innerWidth);
+  const [friendToAdd, setfriendToAdd] = useState(null);
+  const handleOnchange = ({ target }) => {
+    setfriendToAdd(target.value);
+  };
   const readMessage = async (friend) => {
     try {
       setloadingMessage(true);
@@ -41,6 +45,9 @@ const Chats = () => {
       //console.log(error);
     }
     setloadingMessage(false);
+  };
+  const addFriend = () => {
+    console.log(friendToAdd);
   };
   function reportWindowSize() {
     setwindowsInnerWidth(window.innerWidth);
@@ -133,6 +140,9 @@ const Chats = () => {
             userFriends={userFriends}
             loadingMessage={loadingMessage}
             sendMessage={sendMessage}
+            addFriend={addFriend}
+            handleOnchange={handleOnchange}
+            friendToAdd={friendToAdd}
           />
         )}
       </div>
