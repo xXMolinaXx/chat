@@ -99,7 +99,7 @@ const SmallDeviceView = ({
                           </p>
                         </div>
                       );
-                    } else {
+                    } else if (userId === userLogged._id) {
                       return (
                         <div className="my-container rigthHorizontal my-5 ">
                           <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
