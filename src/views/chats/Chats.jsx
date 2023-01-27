@@ -98,15 +98,6 @@ const Chats = () => {
   socket.on("transfering messages", (message) => {
     setactiveMessage(message);
   });
-  socket.io.on("reconnect_attempt", () => {
-    notification.info({ message: "se esta intentando reconectar al servidor" });
-  });
-  socket.io.on("reconnect", () => {
-    notification.info({ message: "Se reconecto al servidor" });
-  });
-  socket.on("disconnect", () => {
-    notification.info({ message: "Te desconectastes del servidor" });
-  });
   useEffect(() => {
     socket.auth = { ...userLogged };
     socket.connect();
@@ -117,6 +108,7 @@ const Chats = () => {
   }, [userLogged]);
   return (
     <MainLayout>
+      <h1></h1>
       <div className="max-w-full container-scroll">
         {windowsInnerWidth <= screenSize.xs ? (
           <SmallDeviceView

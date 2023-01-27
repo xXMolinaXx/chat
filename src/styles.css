@@ -134,7 +134,7 @@ body {
   background-repeat: repeat;
 }*/
 .chatBackground {
-  background-image: url('./extras/img/background.jpg');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/chat-hn-85a02.appspot.com/o/background-min.jpg?alt=media&token=33cd2e4f-d652-4d3b-aacc-151cbfa9a00c');
   background-size: cover;
 }
 

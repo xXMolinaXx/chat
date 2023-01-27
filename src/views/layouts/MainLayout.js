@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Button, Layout, Menu, notification } from "antd";
 
 import { UserContext } from "../../hooks/userContext";
-import logo from "../../extras/img/chat2.png";
+import logo from "../../extras/img/chat.png";
 import { Link, useNavigate } from "react-router-dom";
 import { userLoggedKeyName } from "../../utils/localStorage";
 const { Header, Content, Footer } = Layout;

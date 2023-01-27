@@ -6,7 +6,10 @@ import { my_fetch } from "../../utils/fetch";
 import { UserContext } from "../../hooks/userContext";
 import LogIn from "./LogIn";
 import Registry from "./Registry";
-import { setValueLocalStorage, userLoggedKeyName } from "../../utils/localStorage";
+import {
+  setValueLocalStorage,
+  userLoggedKeyName,
+} from "../../utils/localStorage";
 const isForm = ["registry", "login"];
 const CreateUser = () => {
   const { setUserLogged } = useContext(UserContext);
