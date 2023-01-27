@@ -9,10 +9,15 @@ import SmallDeviceView from "./SmallDeviceView";
 import { my_fetch } from "../../utils/fetch";
 
 const socket = io(process.env.REACT_APP_API_URL, { autoConnect: false });
-socket.on("connect_error", (mensaje) => {
-  console.log("Error en conexion:", mensaje);
+socket.on("connect_error", (err) => {
+  if (err.message === "invalid username") {
+    alert('error socket nombre invalido')
+  }
 });
-
+// We also register a catch-all listener, which is very useful during development:
+socket.onAny((event, ...args) => {
+  console.log(event, args);
+});
 const Chats = () => {
   const [loadingMessage, setloadingMessage] = useState(false);
   const { userLogged } = useContext(UserContext);
@@ -81,6 +86,11 @@ const Chats = () => {
     });
     setmessage("");
   };
+  const HandleEsc = (event)=>{
+    if (event.key === "Escape") {
+      setactiveMessage(null);
+    }
+  }
   socket.on("peopleConnected", ({ amountConnected, dataUserConnected }) => {
     settotalUserConected(dataUserConnected.length);
     setuserFriends(dataUserConnected.filter((el) => el.idSocket !== socket.id));
@@ -101,6 +111,7 @@ const Chats = () => {
     socket.auth = { ...userLogged };
     socket.connect();
     return () => {
+      socket.off("connect_error");
       socket.disconnect();
     };
   }, [userLogged]);
@@ -143,6 +154,7 @@ const Chats = () => {
             addFriend={addFriend}
             handleOnchange={handleOnchange}
             friendToAdd={friendToAdd}
+            HandleEsc={HandleEsc}
           />
         )}
       </div>

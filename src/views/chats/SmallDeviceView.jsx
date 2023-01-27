@@ -87,10 +87,10 @@ const SmallDeviceView = ({
             <div className="p-10 container flex flex-col-reverse overflow-y-auto h-full container-scroll">
               {activeMessage &&
                 activeMessage.message
-                  .map(({ message, userId, sendAtd }) => {
+                  .map(({ message, userId, sendAtd,_id }, i) => {
                     if (userId !== userLogged._id) {
                       return (
-                        <div className="my-container my-5">
+                        <div className="my-container my-5"  key={`${_id}-${i}`}>
                           <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
                             {message}
                             <br />
@@ -100,7 +100,7 @@ const SmallDeviceView = ({
                       );
                     } else if (userId === userLogged._id) {
                       return (
-                        <div className="my-container rigthHorizontal my-5 ">
+                        <div className="my-container rigthHorizontal my-5 "  key={`${_id}-${i}`}>
                           <p className="bg-slate-100 shadow-lg max-w-lg rounded-lg  border-2 p-2">
                             {message}
                             <br />

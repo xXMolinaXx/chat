@@ -32,6 +32,7 @@ const MediumDeviceView = ({
   addFriend,
   handleOnchange,
   friendToAdd,
+  HandleEsc,
 }) => {
   const { userLogged } = useContext(UserContext);
   return (
@@ -88,8 +89,8 @@ const MediumDeviceView = ({
         </div>
       </Col>
       {/* message box */}
-      <Col md={12} sm={24} className="gutter-row ">
-        <div className="bg-white rounded-lg  drop-shadow-xl flex flex-col-reverse h-[80vh]">
+      <Col md={12} sm={24} className="gutter-row " >
+        <div className="bg-white rounded-lg  drop-shadow-xl flex flex-col-reverse h-[80vh]" tabIndex="0" onKeyDown={HandleEsc}>
           <div className="m-5 flex">
             <Input
               disabled={!userTochat ? true : false}
