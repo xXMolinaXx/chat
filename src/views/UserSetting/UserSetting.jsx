@@ -43,7 +43,6 @@ const UserSetting = () => {
     password: "",
     birthday: null,
   });
-  const [images, setimages] = useState([]);
   const [urlImage, seturlImage] = useState(noImage);
   const [progress, setprogress] = useState(0);
   const handleUpdate = async () => {
@@ -92,31 +91,39 @@ const UserSetting = () => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setprogress(progress.toFixed(2));
-          
+
           // eslint-disable-next-line default-case
           switch (snapshot.state) {
             case "paused":
               notification.info({
-                message:'se ha pausado la carga de la imagen'
-              })
+                message: "se ha pausado la carga de la imagen",
+              });
               console.log("Upload is paused");
               break;
           }
         },
         (error) => {
           notification.info({
-            message:'error al subir la imagen'
-          })
+            message: "error al subir la imagen",
+          });
         },
         async () => {
           setprogress(0);
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            my_fetch.my_fetch_post(
-              `${process.env.REACT_APP_API_URL}/users/update/uploadImage`,
-              {
-                urlImage:downloadURL
-              }
-            ).then(data=>console.log(data)).catch(error=>console.log(error));
+            my_fetch
+              .my_fetch_post(
+                `${process.env.REACT_APP_API_URL}/users/update/uploadImage`,
+                {
+                  urlImage: downloadURL,
+                  userId: user._id,
+                }
+              )
+              .then((data) => {
+                notification.info({
+                  message:'imagen de usuario actualizada con exito',
+                })
+              })
+              .catch((error) => console.log(error));
           });
         }
       );
@@ -128,6 +135,7 @@ const UserSetting = () => {
     const answer = await my_fetch.my_fetch_get(
       `${process.env.REACT_APP_API_URL}/users/${id}`
     );
+    if (answer?.imgUrl) seturlImage(answer.imgUrl);
     setuser(answer);
   }, [id]);
 
@@ -165,20 +173,6 @@ const UserSetting = () => {
                 <Progress percent={progress} />
               </div>
             )}
-
-            {images.map((imagen) => (
-              <div className="bg-black" key={imagen.index}>
-                <div className="content_img">
-                  <img
-                    alt="algo"
-                    src={imagen.url}
-                    data-toggle="modal"
-                    data-target="#ModalPreViewImg"
-                    className="img-responsive"
-                  ></img>
-                </div>
-              </div>
-            ))}
             <Title level={2}>codigo de usuario: {user._id}</Title>
             <p>
               nota: comparte este codigo para que tus amigos te puedan agregar

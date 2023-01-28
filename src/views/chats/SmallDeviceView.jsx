@@ -108,6 +108,8 @@ const SmallDeviceView = ({
                           </p>
                         </div>
                       );
+                    }else {
+                      return (<p>error</p>)
                     }
                   })}
             </div>

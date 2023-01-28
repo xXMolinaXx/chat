@@ -10,7 +10,7 @@ import {
   Typography,
 } from "antd";
 import { SendOutlined } from "@ant-design/icons";
-import React, { useContext, useId } from "react";
+import React, { useContext } from "react";
 
 import AddFriend from "./AddFriend";
 import loadingGif from "../../extras/img/progress.gif";
@@ -67,7 +67,7 @@ const MediumDeviceView = ({
                         avatar={
                           <Avatar
                             src={
-                              friend.profilePoto ? friend.profilePoto : userIcon
+                              friend.imgUrl ? friend.imgUrl : userIcon
                             }
                           />
                         }
@@ -152,6 +152,8 @@ const MediumDeviceView = ({
                         </p>
                       </div>
                     );
+                  } else {
+                    return (<p>error</p>)
                   }
                 }
               )}

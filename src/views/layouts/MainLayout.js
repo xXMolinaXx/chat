@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Layout, Menu, notification } from "antd";
+import { Layout, Menu, notification } from "antd";
 
 import { UserContext } from "../../hooks/userContext";
 import logo from "../../extras/img/chat.png";

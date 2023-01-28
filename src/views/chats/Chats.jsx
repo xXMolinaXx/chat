@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { UserContext } from "../../hooks/userContext";
-import { notification } from "antd";
 import MainLayout from "../layouts/MainLayout";
 import MediumDeviceView from "./MediumDeviceView";
 import { screenSize } from "../../const/screensize";
@@ -108,7 +107,6 @@ const Chats = () => {
   }, [userLogged]);
   return (
     <MainLayout>
-      <h1></h1>
       <div className="max-w-full container-scroll">
         {windowsInnerWidth <= screenSize.xs ? (
           <SmallDeviceView
