@@ -21,12 +21,10 @@ const MainLayout = ({ children }) => {
     <Link to={`/chats`}>
       <img src={logo} alt="logo" className="my-3 h-8 w-8" />
     </Link>,
-    <Link to={`/settings/${userLogged?._id}`}>{userLogged?.name}</Link>,
+    <Link to={`/settings/${userLogged?._id}`}>{`mi Perfil (${userLogged?.name}) `}</Link>,
     <div onClick={logout}>
-      SALIR
+      cerrar sesion
     </div>,
-    "opcion 1",
-    "opcion 2",
   ].map((key, i) => ({
     key: `nav-bar-element-${i}`,
     label: key,

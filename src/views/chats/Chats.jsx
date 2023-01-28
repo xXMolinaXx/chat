@@ -16,7 +16,7 @@ socket.on("connect_error", (err) => {
 });
 // We also register a catch-all listener, which is very useful during development:
 socket.onAny((event, ...args) => {
-  console.log(event, args);
+  console.log('onAny event: ',event, args);
 });
 const Chats = () => {
   const [loadingMessage, setloadingMessage] = useState(false);
