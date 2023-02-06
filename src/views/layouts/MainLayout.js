@@ -22,6 +22,7 @@ const MainLayout = ({ children }) => {
       <img src={logo} alt="logo" className="my-3 h-8 w-8" />
     </Link>,
     <Link to={`/settings/${userLogged?._id}`}>{`mi Perfil (${userLogged?.name}) `}</Link>,
+    <Link to={`/blogs`}>blogs</Link>,
     <div onClick={logout}>
       cerrar sesion
     </div>,

@@ -1,14 +1,20 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 ////////////////////////////////////////////
-import { ChatingView, NotFound } from "./views";
-import CreateUser from "./views/CreateUser/CreateUser";
+import loadingGif from "./extras/img/loading.gif";
 import { UserContext, UserContextComponent } from "./hooks/userContext";
-import GridExample from "./views/gridExample/GridExample";
-import UserSetting from "./views/UserSetting/UserSetting";
+import {
+  BlogsView,
+  GridView,
+  BlogFormView,
+  UserSettingView,
+  ChatingView,
+  NotFound,
+  CreateUserView
+} from "./views";
 import "./styles.css";
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -18,28 +24,33 @@ const firebaseConfig = {
   projectId: "chat-hn-85a02",
   storageBucket: "chat-hn-85a02.appspot.com",
   messagingSenderId: "931162868513",
-  appId: "1:931162868513:web:8820065a542612e6924c60"
+  appId: "1:931162868513:web:8820065a542612e6924c60",
 };
 
 export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 
-function returnComponenete(mainView, secondaryView, user) {
+function returnComponenete(mainView, secondaryView, user, loadingUser) {
+  if (loadingUser) {
+    return (
+      <div className="flex justify-center align-middle">
+        <img src={loadingGif} alt="cargando" />
+      </div>
+    );
+  }
   if (user?._id) return mainView;
   else return secondaryView;
 }
 function App() {
-  const { userLogged } = useContext(UserContext);
+  const { userLogged, loadingUser } = useContext(UserContext);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/grid" element={<GridExample />} />
         <Route
           path="/"
           element={returnComponenete(
             <ChatingView />,
-            <CreateUser />,
+            <CreateUserView />,
             userLogged
           )}
         />
@@ -47,18 +58,40 @@ function App() {
           path="/chats"
           element={returnComponenete(
             <ChatingView />,
-            <CreateUser />,
-            userLogged
+            <CreateUserView />,
+            userLogged,
+            loadingUser
           )}
         />
         <Route
           path="/settings/:id"
           element={returnComponenete(
-            <UserSetting />,
-            <CreateUser />,
-            userLogged
+            <UserSettingView />,
+            <CreateUserView />,
+            userLogged,
+            loadingUser
           )}
         />
+        <Route
+          path="/blogs"
+          element={returnComponenete(
+            <BlogsView />,
+            <CreateUserView />,
+            userLogged,
+            loadingUser
+          )}
+        />
+        <Route
+          path="/blogForm"
+          element={returnComponenete(
+            <BlogFormView />,
+            <CreateUserView />,
+            userLogged,
+            loadingUser
+          )}
+        />
+        <Route path="*" element={<NotFound />} />
+        <Route path="/grid" element={<GridView />} />
       </Routes>
     </BrowserRouter>
   );
